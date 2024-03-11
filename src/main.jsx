@@ -10,10 +10,10 @@ const root = createRoot(rootElement)
 
 root.render(
   <React.StrictMode>
-	  <CssVarsProvider theme={theme}>
-		  {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-		  <CssBaseline/>
-		  <App/>
-	  </CssVarsProvider>
+    <CssVarsProvider theme={theme}>
+      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+      <CssBaseline/>
+      <App/>
+    </CssVarsProvider>
   </React.StrictMode>
 )
