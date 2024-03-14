@@ -1,31 +1,45 @@
+import { LibraryAdd } from '@mui/icons-material'
 import Apps from '@mui/icons-material/Apps'
 import { SvgIcon, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import { ReactComponent as Logo } from '~/assets/slack.svg'
 import WorkSpace from '~/components/AppBar/Menus/WorkSpace'
 import ModeSelect from '~/components/ModeSelect'
 
 function AppBar() {
   return (
-    <Box sx={{
-      with: '100%', height: (theme) => `${theme.trelloCutom.appBarHeight}`,
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between'
-    }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <Apps sx={{ color: 'primary.main' }}/>
-        <Box>
-          <SvgIcon component={Logo} inheritViewBox sx={{ color: 'primary.main' }}/>
-
-          <Typography variant="span" sx={{ fontSize:'1.2', color: 'primary.main' }}>
-            TL
-          </Typography>
-        </Box>
-        <WorkSpace/>
-      </Box>
-      <Box>
-        <ModeSelect/>
-      </Box>
-    </Box>
+	  <Box sx={{
+		  with: '100%', height: (theme) => `${theme.trelloCutom.appBarHeight}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, padding: 2,
+		  overflowX: 'auto',
+		  overflowY: 'hidden',
+		  bgcolor: theme => theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0'
+	  }}>
+		  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+			  <Apps sx={{ color: 'white' }}/>
+			  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+				  <SvgIcon component={Logo} inheritViewBox fontSize="small" sx={{ color: 'white' }}/>
+				  <Typography variant="span" sx={{ fontSize: '1.2', color: 'white' }}>Trello</Typography>
+			  </Box>
+			  <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+				  <WorkSpace/>
+				  <WorkSpace/>
+				  <WorkSpace/>
+				  <Button
+            variant="outlined"
+            startIcon={<LibraryAdd/>}
+            sx={{
+              color: 'white', border: 'none', '&:hover': {
+                border: 'none'
+              }
+            }}
+				  >Create</Button>
+			  </Box>
+		  </Box>
+		  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+			  <ModeSelect/>
+		  </Box>
+	  </Box>
   )
 }
 

@@ -15,18 +15,21 @@ export default function PositionedMenu() {
   }
 
   return (
-    <div>
-      <Button
+	  <div>
+		  <Button
         id="basic-menu-workspaces"
         aria-controls={open ? 'basic-menu-workspaces' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         endIcon={<ExpandMore/>}
-      >
-        Workspaces
-      </Button>
-      <Menu
+        sx={{
+          color: 'white'
+        }}
+		  >
+			  Workspaces
+		  </Button>
+		  <Menu
         id="basic-menu-workspaces"
         aria-labelledby="basic-menu-workspaces"
         anchorEl={anchorEl}
@@ -40,11 +43,11 @@ export default function PositionedMenu() {
           vertical: 'top',
           horizontal: 'left'
         }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
-    </div>
+		  >
+			  <MenuItem onClick={handleClose}>Profile</MenuItem>
+			  <MenuItem onClick={handleClose}>My account</MenuItem>
+			  <MenuItem onClick={handleClose}>Logout</MenuItem>
+		  </Menu>
+	  </div>
   )
 }

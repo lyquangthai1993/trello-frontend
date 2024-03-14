@@ -15,38 +15,42 @@ function Index() {
     setMode(event.target.value)
   }
 
-  return (<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-    <InputLabel id="demo-select-dark-light-mode">Mode</InputLabel>
-    <Select
-      labelId="demo-select-dark-light-mode"
-      id="demo-select-dark-light-mode"
-      value={mode}
-      label="Mode"
-      onChange={handleChange}
-    >
-      <MenuItem value={'light'}>
-        <Box sx={{
-          display: 'flex', alignItems: 'center', gap: 1
-        }}>
-          <LightModeIcon fontSize="small"/> Light
-        </Box>
-      </MenuItem>
-      <MenuItem value={'dark'}>
-        <Box sx={{
-          display: 'flex', alignItems: 'center', gap: 1
-        }}>
-          <DarkModeIcon fontSize="small"/> Dark
-        </Box>
-      </MenuItem>
-      <MenuItem value={'system'}>
-        <Box sx={{
-          display: 'flex', alignItems: 'center', gap: 1
-        }}>
-          <SettingsBrightnessIcon fontSize="small"/> System
-        </Box>
-      </MenuItem>
-    </Select>
-  </FormControl>)
+  return (
+	  <FormControl size="small" sx={{ minWidth: 120 }}>
+		  <InputLabel id="demo-select-dark-light-mode">Mode</InputLabel>
+		  <Select
+        labelId="demo-select-dark-light-mode"
+        id="demo-select-dark-light-mode"
+        value={mode}
+        label="Mode"
+        onChange={handleChange}
+        sx={{
+          color: 'white'
+        }}
+		  >
+			  <MenuItem value={'light'}>
+				  <Box sx={{
+					  display: 'flex', alignItems: 'center', gap: 1
+				  }}>
+					  <LightModeIcon fontSize="small"/> Light
+				  </Box>
+			  </MenuItem>
+			  <MenuItem value={'dark'}>
+				  <Box sx={{
+					  display: 'flex', alignItems: 'center', gap: 1
+				  }}>
+					  <DarkModeIcon fontSize="small"/> Dark
+				  </Box>
+			  </MenuItem>
+			  <MenuItem value={'system'}>
+				  <Box sx={{
+					  display: 'flex', alignItems: 'center', gap: 1
+				  }}>
+					  <SettingsBrightnessIcon fontSize="small"/> System
+				  </Box>
+			  </MenuItem>
+		  </Select>
+	  </FormControl>)
 }
 
 export default Index
