@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import { useColorScheme } from '@mui/material/styles'
 
-function Index() {
+function ModeSelect() {
   const { mode, setMode } = useColorScheme()
 
   const handleChange = (event) => {
@@ -62,4 +62,4 @@ function Index() {
     </FormControl>)
 }
 
-export default Index
+export default ModeSelect

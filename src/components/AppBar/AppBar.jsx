@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import { useState } from 'react'
 import { ReactComponent as Logo } from '~/assets/slack.svg'
 import WorkSpace from '~/components/AppBar/Menus/WorkSpace'
-import ModeSelect from '~/components/ModeSelect'
+import ModeSelect from '~/components/ModeSelect/ModeSelect'
 
 function AppBar() {
   const [searchValue, setSearchValue] = useState('')
