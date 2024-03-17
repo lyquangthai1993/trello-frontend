@@ -3,8 +3,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Column from '~/pages/Boards/BoardContent/ListColumns/Column/Column'
 
-
-function ListColumns() {
+function ListColumns({ columns }) {
   return (
     <Box
       sx={{
@@ -18,10 +17,10 @@ function ListColumns() {
           m: 2
         }
       }}>
-      <Column/>
-      <Column/>
-      <Column/>
-      <Column/>
+
+      {columns?.map((column) => (
+        <Column key={column._id} column={column}/>
+      ))}
 
       <Box
         variant="outlined"
