@@ -38,6 +38,7 @@ module.exports = {
 		'comma-dangle': 1,
 		'comma-spacing': 1,
 		'arrow-spacing': 1,
-		'no-mixed-spaces-and-tabs': 0
+		'no-mixed-spaces-and-tabs': 0,
+    'arrow-parens': 0,
 	}
 };
