@@ -1,4 +1,4 @@
-import { DndContext, MouseSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
 import { useEffect, useState } from 'react'
@@ -7,24 +7,24 @@ import { mapOrder } from '~/utils/sorts'
 
 
 function BoardContent({ board }) {
-  const pointerSensor = useSensor(PointerSensor, {
-    activationConstraint: {
-      distance: 10// chuot di chuyen 10px moi bat dau drag
-    }
-  })
+  // const pointerSensor = useSensor(PointerSensor, {
+  //   activationConstraint: {
+  //     distance: 10// chuot di chuyen 10px moi bat dau drag
+  //   }
+  // })
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10// chuot di chuyen 10px moi bat dau drag
     }
   })
-  
+
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
       delay: 250,
-      tolerance: 5
+      tolerance: 500
     }
   })
-  
+
   // const sesnors = useSensors(pointerSensor)
   const sesnors = useSensors(mouseSensor, touchSensor)
   const [orderedColumns, setOrderedColumns] = useState([])
@@ -35,7 +35,6 @@ function BoardContent({ board }) {
   }, [board])
 
   const handleDragEnd = (event) => {
-    console.log('event', event)
     const { active, over } = event
 
     // nếu không có over thì return do kéo linh tinh ra ngoài
