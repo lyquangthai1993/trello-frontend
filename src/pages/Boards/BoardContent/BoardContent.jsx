@@ -83,10 +83,9 @@ function BoardContent({ board }) {
         // filter mang cards o column cu, loai tru activeDraggingCardId ra
         nextActiveColumn.cards = nextActiveColumn?.cards?.filter(card => card._id !== activeDraggingCardId)
 
-
         // thêm placeholder card vào column cũ nếu column cũ không còn card nào
         if (isEmpty(nextActiveColumn?.cards)) {
-          // console.log('card cuoi cung bi keo di ')
+          // console.log('card cuoi cung bi keo di')
           nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
         }
 
@@ -107,9 +106,10 @@ function BoardContent({ board }) {
 
         // column over se bo sung vao mang cards cua no theo vi tri newCardIndex
         nextOverColumn.cards = nextOverColumn?.cards?.toSpliced(newCardIndex, 0, rebuild_activeDraggingCardData)
+        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card.FE_PlaceholderCard)
 
         // cap nhat mang cardOrderIds
-        nextOverColumn.cardOrderIds = nextOverColumn?.cards?.filter(card => card._id)
+        nextOverColumn.cardOrderIds = nextOverColumn?.cards?.map(card => card._id)
       }
       // console.log('nextColumns = ', nextColumns)
       return nextColumns
@@ -279,14 +279,14 @@ function BoardContent({ board }) {
   }, [activeDragItemType, orderedColumns])
 
   return (<DndContext
-    sensors={sesnors}
-    // collisionDetection={closestCorners}
-    // chỉ dùng closestCorners sẽ bị lỗi khi kéo vào giữa, gây lỗi giật giật
-    // https://github.com/clauderic/dnd-kit/blob/master/stories/2%20-%20Presets/Sortable/MultipleContainers.tsx
-    collisionDetection={collisionDetectionStrategy}
-    onDragStart={handleDragStart}
-    onDragOver={handleDragOver}
-    onDragEnd={handleDragEnd}
+	  sensors={sesnors}
+	  // collisionDetection={closestCorners}
+	  // chỉ dùng closestCorners sẽ bị lỗi khi kéo vào giữa, gây lỗi giật giật
+	  // https://github.com/clauderic/dnd-kit/blob/master/stories/2%20-%20Presets/Sortable/MultipleContainers.tsx
+	  collisionDetection={collisionDetectionStrategy}
+	  onDragStart={handleDragStart}
+	  onDragOver={handleDragOver}
+	  onDragEnd={handleDragEnd}
   >
     <Box sx={{
       backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'), with: '100%', height: (theme) => theme.trelloCutom.boardContentHeight, display: 'flex', p: '10px 0'
