@@ -1,9 +1,8 @@
-
 export const mockData = {
   board: {
     _id: 'board-id-01',
-    title: 'TrungQuanDev MERN Stack Board',
-    description: 'Pro MERN stack Course',
+	  title: 'My Trello',
+	  description: 'This is a description of my board',
     type: 'public', // 'private'
     ownerIds: [], // Những users là Admin của board
     memberIds: [], // Những users là member bình thường của board
