@@ -1,4 +1,4 @@
-import { closestCenter, closestCorners, defaultDropAnimationSideEffects, DndContext, DragOverlay, getFirstCollision, MouseSensor, pointerWithin, rectIntersection, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { closestCorners, defaultDropAnimationSideEffects, DndContext, DragOverlay, getFirstCollision, MouseSensor, pointerWithin, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
 import { cloneDeep } from 'lodash'
@@ -59,15 +59,7 @@ function BoardContent({ board }) {
     return orderedColumns.find(column => column?.cards?.map(card => card._id)?.includes(cardId))
   }
 
-  const moveCardBetweenDifferenceColumns = (
-	  overColumn,
-	  overCardId,
-	  active,
-	  over,
-	  activeColumn,
-	  activeDraggingCardId,
-	  activeDraggingCardData
-  ) => {
+  const moveCardBetweenDifferenceColumns = (overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData) => {
     setOrderedColumns(prevColumns => {
       const overCardIndex = overColumn?.cards?.findIndex(card => card._id === overCardId)
 
@@ -102,8 +94,7 @@ function BoardContent({ board }) {
 
         // phải cập nhật lại columnId cho đúng chuẩn data khi kéo card giữa 2 column khác nhau
         const rebuild_activeDraggingCardData = {
-          ...activeDraggingCardData,
-          columnId: nextOverColumn._id
+          ...activeDraggingCardData, columnId: nextOverColumn._id
         }
 
         // column over se bo sung vao mang cards cua no theo vi tri newCardIndex
@@ -160,15 +151,7 @@ function BoardContent({ board }) {
 
     // kiem tra 2 column nay khac nhau thi moi thuc hien update o hai column khac nhau nay
     if (activeColumn?._id !== overColumn?._id) {
-	    moveCardBetweenDifferenceColumns(
-	      overColumn,
-	      overCardId,
-	      active,
-	      over,
-	      activeColumn,
-	      activeDraggingCardId,
-	      activeDraggingCardData
-	    )
+      moveCardBetweenDifferenceColumns(overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData)
     }
 
   }
@@ -182,7 +165,7 @@ function BoardContent({ board }) {
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.CARD) {
 
       const {
-	      id: activeDraggingCardId, data: { current: activeDraggingCardData }
+        id: activeDraggingCardId, data: { current: activeDraggingCardData }
       } = active
       const { id: overCardId } = over
 
@@ -193,17 +176,9 @@ function BoardContent({ board }) {
 
       if (!activeColumn || !overColumn) return false
 
-	    // hanh dong keo tha card giua 2 column khac nhau
+      // hanh dong keo tha card giua 2 column khac nhau
       if (oldColumnWhenDraggingCard?._id !== overColumn?._id) {
-	      moveCardBetweenDifferenceColumns(
-	        overColumn,
-	        overCardId,
-	        active,
-	        over,
-	        activeColumn,
-	        activeDraggingCardId,
-	        activeDraggingCardData
-	      )
+        moveCardBetweenDifferenceColumns(overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData)
 
       } else {
         // console.log('hanh dong keo tha card trong 1 column')
@@ -261,45 +236,40 @@ function BoardContent({ board }) {
   }
 
   const collisionDetectionStrategy = useCallback((args) => {
-		  console.log('collisionDetectionStrategy')
-		  if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
-			  return closestCorners({ ...args })
-		  }
+    console.log('collisionDetectionStrategy')
+    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
+      return closestCorners({ ...args })
+    }
 
 
-		  // tim cac diem giao nhau voi con tro
-		  const pointerIntersections = pointerWithin(args)
+    // tim cac diem giao nhau voi con tro
+    const pointerIntersections = pointerWithin(args)
+    console.log('pointerIntersections = ', pointerIntersections)
+    if (!pointerIntersections?.length) return
 
-		  const intersections =
-			pointerIntersections?.length ?
-			  pointerIntersections
-			  : rectIntersection(args)
+    // const intersections = pointerIntersections?.length > 0 ? pointerIntersections : rectIntersection(args)
 
-		  let overId = getFirstCollision(intersections, 'id')
+    let overId = getFirstCollision(pointerIntersections, 'id')
 
-		  if (overId) {
+    if (overId) {
+      const checkColumn = orderedColumns.find(column => column._id === overId)
+      // console.log('checkColumn = ', checkColumn)
+      if (checkColumn) {
+        // console.log('overId before = ', overId)
 
-			  const checkColumn = orderedColumns.find(column => column._id === overId)
-			  if (checkColumn) {
-				  console.log('overId before = ', overId)
-				  overId = closestCenter({
-					  ...args,
-					  droppableContainers: args.droppableContainers.filter(container => {
-						  return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
-					  })
-				  })[0]?.id
+        overId = closestCorners({
+          ...args, droppableContainers: args.droppableContainers.filter((container) => container.id !== overId && checkColumn?.cardOrderIds?.includes(container.id))
+        })[0]?.id
 
-				  console.log('overId after = ', overId)
-			  }
+        // console.log('overId after = ', overId)
+      }
 
-			  lastOverId.current = overId
-			  return [{ id: overId }]
-		  }
+      lastOverId.current = overId
+      return [{ id: overId }]
+    }
 
-		  return lastOverId.current ? [{ id: lastOverId.current }] : []
-	  },
-	  [activeDragItemType, orderedColumns]
-  )
+    return lastOverId.current ? [{ id: lastOverId.current }] : []
+  }, [activeDragItemType, orderedColumns])
 
   return (<DndContext
     sensors={sesnors}
