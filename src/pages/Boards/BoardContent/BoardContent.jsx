@@ -236,7 +236,7 @@ function BoardContent({ board }) {
   }
 
   const collisionDetectionStrategy = useCallback((args) => {
-    console.log('collisionDetectionStrategy')
+    // console.log('collisionDetectionStrategy')
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
       return closestCorners({ ...args })
     }
@@ -244,7 +244,7 @@ function BoardContent({ board }) {
 
     // tim cac diem giao nhau voi con tro
     const pointerIntersections = pointerWithin(args)
-    console.log('pointerIntersections = ', pointerIntersections)
+    // console.log('pointerIntersections = ', pointerIntersections)
     if (!pointerIntersections?.length) return
 
     // const intersections = pointerIntersections?.length > 0 ? pointerIntersections : rectIntersection(args)
