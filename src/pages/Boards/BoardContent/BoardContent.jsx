@@ -1,11 +1,12 @@
 import { closestCorners, defaultDropAnimationSideEffects, DndContext, DragOverlay, getFirstCollision, MouseSensor, pointerWithin, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Column from '~/pages/Boards/BoardContent/ListColumns/Column/Column'
 import Card from '~/pages/Boards/BoardContent/ListColumns/Column/ListCards/Card/Card'
 import ListColumns from '~/pages/Boards/BoardContent/ListColumns/ListColumns'
+import { generatePlaceholderCard } from '~/utils/fommater'
 import { mapOrder } from '~/utils/sorts'
 
 const ACTIVE_DRAG_ITEM_TYPE = {
@@ -82,10 +83,17 @@ function BoardContent({ board }) {
         // filter mang cards o column cu, loai tru activeDraggingCardId ra
         nextActiveColumn.cards = nextActiveColumn?.cards?.filter(card => card._id !== activeDraggingCardId)
 
-        // cap nhat mang cardOrderIds
-        nextActiveColumn.cardOrderIds = nextActiveColumn?.cards?.filter(card => card._id)
 
+        // thêm placeholder card vào column cũ nếu column cũ không còn card nào
+        if (isEmpty(nextActiveColumn?.cards)) {
+          // console.log('card cuoi cung bi keo di ')
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+        }
+
+        // cap nhat mang cardOrderIds
+        nextActiveColumn.cardOrderIds = nextActiveColumn?.cards?.map(card => card._id)
       }
+      // console.log('nextColumns = ', nextColumns)
 
       // nextOverColumn: column mới
       if (nextOverColumn) {
@@ -179,9 +187,8 @@ function BoardContent({ board }) {
       // hanh dong keo tha card giua 2 column khac nhau
       if (oldColumnWhenDraggingCard?._id !== overColumn?._id) {
         moveCardBetweenDifferenceColumns(overColumn, overCardId, active, over, activeColumn, activeDraggingCardId, activeDraggingCardData)
-
       } else {
-        // console.log('hanh dong keo tha card trong 1 column')
+        // hanh dong keo tha card trong 1 column
         // lấy vị trí cũ từ active
         const oldCardIndex = oldColumnWhenDraggingCard?.cards?.findIndex(c => c._id === activeDragItemId)
 
