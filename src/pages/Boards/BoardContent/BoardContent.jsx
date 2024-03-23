@@ -14,7 +14,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
 }
 
 
-function BoardContent({ board }) {
+function BoardContent({ board, createNewColumn, createNewCard }) {
   // const pointerSensor = useSensor(PointerSensor, {
   //   activationConstraint: {
   //     distance: 10// chuot di chuyen 10px moi bat dau drag
@@ -291,7 +291,11 @@ function BoardContent({ board }) {
     <Box sx={{
       backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'), with: '100%', height: (theme) => theme.trelloCutom.boardContentHeight, display: 'flex', p: '10px 0'
     }}>
-      <ListColumns columns={orderedColumns}/>
+      <ListColumns columns={orderedColumns}
+						 boardId={board?._id}
+						 createNewColumn={createNewColumn}
+				   createNewCard={createNewCard}/>
+
       <DragOverlay dropAnimation={customDropAnimation}>
         {!activeDragItemType && null}
         {activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN && <Column column={activeDragItemData}/>}

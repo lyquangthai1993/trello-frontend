@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import ListCards from '~/pages/Boards/BoardContent/ListColumns/Column/ListCards/ListCards'
 import { mapOrder } from '~/utils/sorts'
 
-function Column({ column }) {
+function Column({ column, createNewCard }) {
   const {
     attributes,
     listeners,
@@ -59,9 +59,12 @@ function Column({ column }) {
       })
       return
     }
-
+	  createNewCard({
+		  columnId: column._id,
+		  title: newCardTitle
+	  })
     toggleNewCardForm()
-    setOpenNewCardForm('')
+    setNewCardTitle('')
   }
 
   return (

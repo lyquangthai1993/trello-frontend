@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 // import { createNewColumnAPI } from '~/apis'
 import Column from '~/pages/Boards/BoardContent/ListColumns/Column/Column'
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, boardId, createNewColumn, createNewCard }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState('')
   const toggleNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
@@ -23,19 +23,21 @@ function ListColumns({ columns }) {
       return
     }
 
-    // createNewColumnAPI({
-    // 		  title: newColumnTitle,
-    // 		  boardId: columns[0].boardId
-    // })
+    const newColumnData = {
+      title: newColumnTitle,
+      boardId
+    }
 
-	  toggleNewColumnForm()
-	  setOpenNewColumnForm('')
+    createNewColumn(newColumnData)
+
+    toggleNewColumnForm()
+    setNewColumnTitle('')
   }
 
 
   /* Sortable context: https://dndkit.com/docs/sortable-context
-	  phải parse _id của column thành string để tránh lỗi: "The provided id must be a string or a number."
-  */
+			phải parse _id của column thành string để tránh lỗi: "The provided id must be a string or a number."
+		*/
   return (
 	  <SortableContext items={columns?.map(column => column._id)} strategy={horizontalListSortingStrategy}>
 		  <Box
@@ -52,7 +54,7 @@ function ListColumns({ columns }) {
         }}>
 
 			  {columns?.map((column) => (
-          <Column key={column._id} column={column}/>
+          <Column key={column._id} column={column} createNewCard={createNewCard}/>
 			  ))}
 
 			  {!openNewColumnForm ?

@@ -21,14 +21,13 @@ export const creatNewCardAPI = async (newCard) => {
 
 const errorHandler = (error) => {
   if (error.response?.status >= 300) {
-    toast.error(`${error.response.statusText}`, {
-      position: 'top-center',
-      autoClose: false,
+    toast.error(`${error.response.data.message||error.response.statusText}`, {
+      position: 'top-right',
+      autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
-      draggable: true,
-      progress: 0
+      draggable: true
     })
   }
 
