@@ -30,34 +30,38 @@ function Card({
   }
 
   return (
-    <MuiCard
+	  <MuiCard
       ref={setNodeRef}
       sx={{
         cursor: 'pointer',
         boxShadow: '0 1px 1px rgba(0, 0, 0, 0.4)',
         overflow: 'unset',
-        display: card?.FE_PlaceholderCard ? 'none' : 'block'
+        display: card?.FE_PlaceholderCard ? 'none' : 'block',
+        border: '1px solid transparent',
+        '&:hover': {
+          borderColor: (theme) => theme.palette.primary.main
+        }
       }}
       style={dndKitCardStyles}
       {...attributes}
       {...listeners}
-    >
-      {card?.cover ?
+	  >
+		  {card?.cover ?
         <CardMedia
-          sx={{ height: 140 }}
-          image={card?.cover}
-          title="green iguana"
+			  sx={{ height: 140 }}
+			  image={card?.cover}
+			  title="green iguana"
         />
         : null}
-      <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
-        <Typography>{card?.title}</Typography>
-      </CardContent>
-      <CardActions sx={{ p: '0 4px 8px 4px' }}>
-        {!!card?.memberIds?.length && <Button size="small" startIcon={<Group/>}>{card?.memberIds?.length}</Button>}
-        {!!card?.comments?.length && <Button size="small" startIcon={<Comment/>}>{card?.comments?.length}</Button>}
-        {!!card?.attachments?.length && <Button size="small" startIcon={<Attachment/>}>{card?.attachments?.length}</Button>}
-      </CardActions>
-    </MuiCard>
+		  <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
+			  <Typography>{card?.title}</Typography>
+		  </CardContent>
+		  <CardActions sx={{ p: '0 4px 8px 4px' }}>
+			  {!!card?.memberIds?.length && <Button size="small" startIcon={<Group/>}>{card?.memberIds?.length}</Button>}
+			  {!!card?.comments?.length && <Button size="small" startIcon={<Comment/>}>{card?.comments?.length}</Button>}
+			  {!!card?.attachments?.length && <Button size="small" startIcon={<Attachment/>}>{card?.attachments?.length}</Button>}
+		  </CardActions>
+	  </MuiCard>
   )
 }
 

@@ -10,6 +10,15 @@ export const fetchBoardDetailAPI = async (boardId) => {
   return request.data
 }
 
+export const createNewColumnAPI = async (newColumn) => {
+  const request = await axiosInstance.post('/v1/columns', newColumn)
+  return request.data
+}
+export const creatNewCardAPI = async (newCard) => {
+  const request = await axiosInstance.post('/v1/cards', newCard)
+  return request.data
+}
+
 const errorHandler = (error) => {
   if (error.response?.status >= 300) {
     toast.error(`${error.response.statusText}`, {
@@ -30,7 +39,7 @@ const errorHandler = (error) => {
 // response interceptor for handling common errors (e.g. HTTP 500)
 axiosInstance.interceptors.response.use(
   (response) => {
-    return response
+	  return response
   },
   (error) => errorHandler(error)
 )
