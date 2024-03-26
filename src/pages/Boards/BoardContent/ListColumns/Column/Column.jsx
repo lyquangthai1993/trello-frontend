@@ -9,7 +9,6 @@ import MenuItem from '@mui/material/MenuItem'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import ListCards from '~/pages/Boards/BoardContent/ListColumns/Column/ListCards/ListCards'
-import { mapOrder } from '~/utils/sorts'
 
 function Column({ column, createNewCard, deleteColumn }) {
   const {
@@ -44,7 +43,8 @@ function Column({ column, createNewCard, deleteColumn }) {
     setAnchorEl(null)
   }
 
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  // const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  const orderedCards = column?.cards
 
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const [newCardTitle, setNewCardTitle] = useState('')

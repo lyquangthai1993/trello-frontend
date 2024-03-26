@@ -1,27 +1,36 @@
+import { CircularProgress, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { cloneDeep, isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
-import { createNewColumnAPI, creatNewCardAPI, fetchBoardDetailAPI, updateBoardDetailAPI } from '~/apis'
+import { createNewColumnAPI, creatNewCardAPI, fetchBoardDetailAPI, updateBoardDetailAPI, updateColumnDetailAPI } from '~/apis'
 // import { mockData } from '~/apis/mock-data'
 import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from '~/pages/Boards/BoardBar/BoardBar'
 import BoardContent from '~/pages/Boards/BoardContent/BoardContent'
 import { generatePlaceholderCard } from '~/utils/fommater'
+import { mapOrder } from '~/utils/sorts'
 
 function Board() {
-  const [board, setBoard] = useState({})
+  const [board, setBoard] = useState(null)
 
   useEffect(() => {
     const boardId = '65e46e5efd6cb877bf622352'
     // console.log('boardId = ', boardId)
     fetchBoardDetailAPI(boardId)
 		  .then(board => {
-			  // xu li them card placeholder card
+			  // sap xep lai column va card theo thu tu de dem vao component con
+			  board.columns = mapOrder(board.columns, board.columnOrderIds, '_id')
+
+			  // xu li them card placeholder card khi column bi empty card
 			  board.columns.forEach(column => {
 				  if (isEmpty(column.cards)) {
 					  const columnGenerated = generatePlaceholderCard(column)
 					  column.cards.push(columnGenerated)
 					  column.cardOrderIds.push(columnGenerated._id)
+				  } else {
+					  // sap xep lai column va card theo thu tu de dem vao component con
+					  column.cards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
 				  }
 			  })
 			  setBoard(board)
@@ -75,14 +84,37 @@ function Board() {
   }
 
   // ham xu ly move card trong cung column
-  const moveCardInTheSameColumn = async (dndOrderedCards, dndOrderedCardIds, columnId) => {
+  const moveCardInTheSameColumn = (dndOrderedCards, dndOrderedCardIds, columnId) => {
+    const newBoard = cloneDeep(board)
 
+    const columnToUpdate = newBoard?.columns.find(column => column._id === columnId)
+
+    if (columnToUpdate) {
+      columnToUpdate.cards = dndOrderedCards
+      columnToUpdate.cardOrderIds = dndOrderedCardIds
+    }
+    setBoard(newBoard)
+
+    // goi api update column
+    updateColumnDetailAPI(columnId, { cardOrderIds: dndOrderedCardIds })
   }
 
   const deleteColumn = async () => {
     // const columnDeleted = await deleteColumnAPI(columnId)
 
   }
+
+  if (!board) return <Box sx={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 2,
+    width: '100vw',
+    height: '100vh'
+  }}>
+    <CircularProgress/>
+    <Typography>Loadding board...</Typography>
+  </Box>
 
   return (
 	  <Container
@@ -94,11 +126,11 @@ function Board() {
 		  <AppBar/>
 		  <BoardBar board={board}/>
 		  <BoardContent board={board}
-		                createNewColumn={createNewColumn}
-		                moveColumns={moveColumns}
-		                deleteColumn={deleteColumn}
-		                createNewCard={createNewCard}
-		                moveCardInTheSameColumn={moveCardInTheSameColumn}
+        createNewColumn={createNewColumn}
+        moveColumns={moveColumns}
+        deleteColumn={deleteColumn}
+        createNewCard={createNewCard}
+        moveCardInTheSameColumn={moveCardInTheSameColumn}
 		  />
 	  </Container>
   )
