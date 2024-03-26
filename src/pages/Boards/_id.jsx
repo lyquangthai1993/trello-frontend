@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container'
 import { cloneDeep, isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
-import { createNewColumnAPI, creatNewCardAPI, fetchBoardDetailAPI } from '~/apis'
+import { createNewColumnAPI, creatNewCardAPI, fetchBoardDetailAPI, updateBoardDetailAPI } from '~/apis'
 // import { mockData } from '~/apis/mock-data'
 import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from '~/pages/Boards/BoardBar/BoardBar'
@@ -60,6 +60,25 @@ function Board() {
     setBoard(newBoard)
   }
 
+  const moveColumns = async (dndOrderedColumns) => {
+    // cap nhat state cho chuan state cua board
+    const dndOrderedColumnIds = dndOrderedColumns.map(c => c._id)
+    const newBoard = cloneDeep(board)
+    newBoard.columns = dndOrderedColumns
+    newBoard.columnOrderIds = dndOrderedColumnIds
+    setBoard(newBoard)
+
+    // call api update columnOrderIds board
+    await updateBoardDetailAPI(newBoard._id, {
+      columnOrderIds: newBoard.columnOrderIds
+    })
+  }
+
+  const deleteColumn = async () => {
+    // const columnDeleted = await deleteColumnAPI(columnId)
+
+  }
+
   return (
 	  <Container
       disableGutters={true}
@@ -69,7 +88,12 @@ function Board() {
       }}>
 		  <AppBar/>
 		  <BoardBar board={board}/>
-		  <BoardContent board={board} createNewColumn={createNewColumn} createNewCard={createNewCard}/>
+		  <BoardContent board={board}
+		                createNewColumn={createNewColumn}
+		                moveColumns={moveColumns}
+		                deleteColumn={deleteColumn}
+		                createNewCard={createNewCard}
+		  />
 	  </Container>
   )
 }

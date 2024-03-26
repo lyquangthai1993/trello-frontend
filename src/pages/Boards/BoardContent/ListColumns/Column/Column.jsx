@@ -1,7 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { AddCard, Close, Cloud, DeleteForever, DragHandle, ExpandMore } from '@mui/icons-material'
-import { Divider, ListItemIcon, ListItemText, TextField, Tooltip, Typography } from '@mui/material'
+import { ListItemIcon, ListItemText, TextField, Tooltip, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import ListCards from '~/pages/Boards/BoardContent/ListColumns/Column/ListCards/ListCards'
 import { mapOrder } from '~/utils/sorts'
 
-function Column({ column, createNewCard }) {
+function Column({ column, createNewCard, deleteColumn }) {
   const {
     attributes,
     listeners,
@@ -65,6 +65,11 @@ function Column({ column, createNewCard }) {
 	  })
     toggleNewCardForm()
     setNewCardTitle('')
+  }
+
+  const handleRemoveColumn = (columnId) => {
+    // call function from props
+    deleteColumn(columnId)
   }
 
   return (
@@ -124,12 +129,7 @@ function Column({ column, createNewCard }) {
                 horizontal: 'left'
               }}
 					  >
-						  <MenuItem onClick={handleClose}>
-							  <ListItemIcon><AddCard fontSize={'small'}/></ListItemIcon>
-							  <ListItemText>Add new card</ListItemText>
-						  </MenuItem>
-						  <Divider/>
-						  <MenuItem onClick={handleClose}>
+						  <MenuItem onClick={() => handleRemoveColumn(column?._id)}>
 							  <ListItemIcon><DeleteForever fontSize={'small'}/></ListItemIcon>
 							  <ListItemText>Remove</ListItemText>
 						  </MenuItem>

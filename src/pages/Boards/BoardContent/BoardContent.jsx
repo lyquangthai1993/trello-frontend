@@ -14,7 +14,11 @@ const ACTIVE_DRAG_ITEM_TYPE = {
 }
 
 
-function BoardContent({ board, createNewColumn, createNewCard }) {
+function BoardContent({
+	                      board,
+	                      createNewColumn, moveColumns, deleteColumn,
+	                      createNewCard
+}) {
   // const pointerSensor = useSensor(PointerSensor, {
   //   activationConstraint: {
   //     distance: 10// chuot di chuyen 10px moi bat dau drag
@@ -163,6 +167,7 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
     }
 
   }
+
   const handleDragEnd = (event) => {
     // console.log('event end = ', event)
     const { active, over } = event
@@ -170,6 +175,7 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
     // nếu không có over thì return do kéo linh tinh ra ngoài
     if (!over || !active) return
 
+	  // xử lí kéo thả card
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.CARD) {
 
       const {
@@ -215,6 +221,7 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
       return false
     }
 
+	  // xử lí kéo thả column
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
       // nếu vị trí trước và sau không giống nhau thì mới thực hiện update
       if (active.id !== over.id) {
@@ -228,6 +235,7 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
 
         // se call api update orderColumnsIds cho board sau khi drag xong
         setOrderedColumns(dndOrderedColumns)
+	      moveColumns(dndOrderedColumns)
       }
     }
 
@@ -292,9 +300,11 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
       backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'), with: '100%', height: (theme) => theme.trelloCutom.boardContentHeight, display: 'flex', p: '10px 0'
     }}>
       <ListColumns columns={orderedColumns}
-						 boardId={board?._id}
-						 createNewColumn={createNewColumn}
-				   createNewCard={createNewCard}/>
+        boardId={board?._id}
+        createNewColumn={createNewColumn}
+        createNewCard={createNewCard}
+        deleteColumn={deleteColumn}
+      />
 
       <DragOverlay dropAnimation={customDropAnimation}>
         {!activeDragItemType && null}
