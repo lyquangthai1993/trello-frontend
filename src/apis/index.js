@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { APIROOT } from '~/utils/contans'
+import { APIROOT } from '~/utils/constant'
 // axios instance for making requests
 const axiosInstance = axios.create({
   baseURL: APIROOT
@@ -28,6 +28,7 @@ const errorHandler = (error) => {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true
+
     })
   }
 
