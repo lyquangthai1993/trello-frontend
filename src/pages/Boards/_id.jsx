@@ -74,6 +74,11 @@ function Board() {
     })
   }
 
+  // ham xu ly move card trong cung column
+  const moveCardInTheSameColumn = async (dndOrderedCards, dndOrderedCardIds, columnId) => {
+
+  }
+
   const deleteColumn = async () => {
     // const columnDeleted = await deleteColumnAPI(columnId)
 
@@ -93,6 +98,7 @@ function Board() {
 		                moveColumns={moveColumns}
 		                deleteColumn={deleteColumn}
 		                createNewCard={createNewCard}
+		                moveCardInTheSameColumn={moveCardInTheSameColumn}
 		  />
 	  </Container>
   )

@@ -61,7 +61,7 @@ function Column({ column, createNewCard, deleteColumn }) {
     }
 	  createNewCard({
 		  columnId: column._id,
-		  title: newCardTitle
+		  title: newCardTitle.trim()
 	  })
     toggleNewCardForm()
     setNewCardTitle('')
