@@ -2,8 +2,10 @@ import { CircularProgress, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { cloneDeep, isEmpty } from 'lodash'
+import { useConfirm } from 'material-ui-confirm'
 import { useEffect, useState } from 'react'
-import { createNewColumnAPI, creatNewCardAPI, fetchBoardDetailAPI, updateBoardDetailAPI, updateColumnDetailAPI } from '~/apis'
+import { toast } from 'react-toastify'
+import { createNewColumnAPI, creatNewCardAPI, deleteColumnAPI, fetchBoardDetailAPI, updateBoardDetailAPI, updateColumnDetailAPI } from '~/apis'
 // import { mockData } from '~/apis/mock-data'
 import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from '~/pages/Boards/BoardBar/BoardBar'
@@ -38,6 +40,8 @@ function Board() {
 
   }, [])
 
+  const confirm = useConfirm()
+
   const createNewColumn = async (newColumnData) => {
     const createdColumn = await createNewColumnAPI(newColumnData)
     // console.log('createdColumn = ', createdColumn)
@@ -65,7 +69,7 @@ function Board() {
     if (columnToUpdate) {
       if (columnToUpdate.cards.some(card => card.FE_PlaceholderCard)) {
         columnToUpdate.cards = [createdCard]
-        columnToUpdate.cardOrderIds =[createdCard._id]
+		  columnToUpdate.cardOrderIds = [createdCard._id]
       } else {
         columnToUpdate.cards.push(createdCard)
         columnToUpdate.cardOrderIds.push(createdCard._id)
@@ -104,9 +108,25 @@ function Board() {
     updateColumnDetailAPI(columnId, { cardOrderIds: dndOrderedCardIds })
   }
 
-  const deleteColumn = async () => {
-    // const columnDeleted = await deleteColumnAPI(columnId)
+  const deleteColumn = async (columnId) => {
+    confirm({
+      description: 'This action is permanent!'
+    }).then(() => {
 
+      //set state
+      const newBoard = cloneDeep(board)
+      newBoard.columns = newBoard.columns.filter(column => column._id !== columnId)
+      newBoard.columnOrderIds = newBoard.columnOrderIds.filter(columnId => columnId !== columnId)
+      setBoard(newBoard)
+
+
+      //call API
+      deleteColumnAPI(columnId).then((res) => {
+        toast.success(res.message)
+      })
+    }).catch(() => {
+      /* ... */
+    })
   }
 
   if (!board) return <Box sx={{
@@ -130,7 +150,8 @@ function Board() {
       }}>
 		  <AppBar/>
 		  <BoardBar board={board}/>
-		  <BoardContent board={board}
+		  <BoardContent
+        board={board}
         createNewColumn={createNewColumn}
         moveColumns={moveColumns}
         deleteColumn={deleteColumn}

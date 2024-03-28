@@ -67,8 +67,7 @@ function Column({ column, createNewCard, deleteColumn }) {
     setNewCardTitle('')
   }
 
-  const handleRemoveColumn = (columnId) => {
-    // call function from props
+  const handleDeleteColumn = (columnId) => {
     deleteColumn(columnId)
   }
 
@@ -120,6 +119,7 @@ function Column({ column, createNewCard, deleteColumn }) {
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
+			  onClick={handleClose}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'left'
@@ -129,7 +129,7 @@ function Column({ column, createNewCard, deleteColumn }) {
                 horizontal: 'left'
               }}
 					  >
-						  <MenuItem onClick={() => handleRemoveColumn(column?._id)}>
+						  <MenuItem onClick={() => handleDeleteColumn(column?._id)}>
 							  <ListItemIcon><DeleteForever fontSize={'small'}/></ListItemIcon>
 							  <ListItemText>Remove</ListItemText>
 						  </MenuItem>
@@ -175,14 +175,20 @@ function Column({ column, createNewCard, deleteColumn }) {
 						  autoFocus
 						  value={newCardTitle}
 						  onChange={e => setNewCardTitle(e.target.value)}
+						  onKeyPress={(e) => {
+							  if (e.key === 'Enter') {
+								  e.preventDefault()
+								  addNewCard()
+							  }
+						  }}
 						  sx={{
-							  '& label': { color: 'white' },
-							  '& input': { color: 'white' },
-							  '& label.Mui-focused': { color: 'white' },
+							  '& label': { color: (theme) => theme.palette.primary.main },
+							  '& input': { color: (theme) => theme.palette.primary.main },
+							  '& label.Mui-focused': { color: (theme) => theme.palette.primary.main },
 							  '& .MuiOutlinedInput-root': {
-								  '& fieldset': { borderColor: 'white' },
-								  '&:hover fieldset': { borderColor: 'white' },
-								  '&.Mui-focuced fieldset': { borderColor: 'white' }
+								  '& fieldset': { borderColor: (theme) => theme.palette.primary.main },
+								  '&:hover fieldset': { borderColor: (theme) => theme.palette.primary.main },
+								  '&.Mui-focuced fieldset': { borderColor: (theme) => theme.palette.primary.main }
 							  }
 						  }}
               />
