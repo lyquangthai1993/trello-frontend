@@ -9,8 +9,8 @@ import WorkSpace from '~/components/AppBar/Menus/WorkSpace'
 import ModeSelect from '~/components/ModeSelect/ModeSelect'
 
 function AppBar() {
-  const [searchValue, setSearchValue] = useState('')
-  return (
+    const [searchValue, setSearchValue] = useState('')
+    return (
 	  <Box sx={{
 		  with: '100%', height: (theme) => `${theme.trelloCutom.appBarHeight}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, padding: 2,
 		  overflowX: 'auto',
@@ -28,71 +28,71 @@ function AppBar() {
 				  <WorkSpace/>
 				  <WorkSpace/>
 				  <Button
-            variant="outlined"
-            startIcon={<LibraryAdd/>}
-            sx={{
-              color: 'white', border: 'none', '&:hover': {
-                border: 'none'
-              }
-            }}
+                        variant="outlined"
+                        startIcon={<LibraryAdd/>}
+                        sx={{
+                            color: 'white', border: 'none', '&:hover': {
+                                border: 'none'
+                            }
+                        }}
 				  >Create</Button>
 			  </Box>
 		  </Box>
 		  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
 			  <TextField
-          id="outline-search"
-          label="Search..."
-          type="text"
-          size={'small'}
-          value={searchValue}
-          onChange={e => setSearchValue(e.target.value)}
-          InputProps={{
-            startAdornment: (
+                    id="outline-search"
+                    label="Search..."
+                    type="text"
+                    size={'small'}
+                    value={searchValue}
+                    onChange={e => setSearchValue(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
 					  <InputAdornment position="start">
 						  <Search sx={{ color: 'white' }}/>
 					  </InputAdornment>
-            ),
-            endAdornment: (
+                        ),
+                        endAdornment: (
 					  <InputAdornment position="end">
 						  <Close fontSize={'small'}
-                  sx={{
-                    color: 'white',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => setSearchValue('')}
+								 sx={{
+									 color: 'white',
+									 cursor: 'pointer'
+								 }}
+								 onClick={() => setSearchValue('')}
 						  />
 					  </InputAdornment>
-            )
-          }}
-          sx={{
-            minWidth: 120,
-            maxWidth: 180,
-            '& label': {
-              color: 'white'
-            },
-            '& input': {
-              color: 'white'
-            },
-            '& label.Mui-focused': {
-              color: 'white'
-            },
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: 'white'
-              },
-              '&:hover fieldset': {
-                borderColor: 'white'
-              },
-              '&.Mui-focuced fieldset': {
-                borderColor: 'white'
-              }
-            }
-          }}
+                        )
+                    }}
+                    sx={{
+                        minWidth: 120,
+                        maxWidth: 180,
+                        '& label': {
+                            color: 'white'
+                        },
+                        '& input': {
+                            color: 'white'
+                        },
+                        '& label.Mui-focused': {
+                            color: 'white'
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: 'white'
+                            },
+                            '&:hover fieldset': {
+                                borderColor: 'white'
+                            },
+                            '&.Mui-focuced fieldset': {
+                                borderColor: 'white'
+                            }
+                        }
+                    }}
 			  />
 			  <ModeSelect/>
 		  </Box>
 	  </Box>
-  )
+    )
 }
 
 export default AppBar

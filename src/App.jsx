@@ -1,9 +1,12 @@
-import Board from './pages/Boards/_id'
+// import Board from './pages/Boards/_id'
 
+
+import AuthPage from '~/auth/AuthPage'
 
 export default function App() {
-  return (
-    <>
-      <Board></Board>
-    </>)
+    return (
+	  <>
+		  {/*<Board></Board>*/}
+		  <AuthPage/>
+	  </>)
 }
