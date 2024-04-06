@@ -55,7 +55,7 @@ export default function SignInSide({ toggleSignUp }) {
 	})
 
 	const onSubmit = async (data) => {
-		data.password = bcrypt.hashSync(data.password, 10)
+		// data.password = bcrypt.hashSync(data.password, 10)
 
 		// console.log('data = ', data)
 		loginAPI(data)
@@ -66,12 +66,18 @@ export default function SignInSide({ toggleSignUp }) {
 				// console.log('error = ', error)
 				// TODO: write response from API to mapping here
 				if (error.response && error.response.data) {
+
 					// assuming error.response.data is an object mapping field names to error messages
-					for (const field in error.response.data) {
-						setError(field, {
-							type: 'manual',
-							message: error.response.data[field]
-						})
+					for (const field in error?.response?.data?.fields) {
+
+						setError(
+							field,
+							{
+								type: 'manual',
+								message: error?.response?.data?.fields?.[field]
+							})
+
+
 					}
 				}
 			})
@@ -128,6 +134,9 @@ export default function SignInSide({ toggleSignUp }) {
 							autoComplete="email"
 							autoFocus
 							error={Boolean(errors.email)}
+							sx={{
+								color:''
+							}}
 						/>
 						{errors.email &&
 									<Typography variant="body2" color="error" style={{ marginTop: '5px' }}>
