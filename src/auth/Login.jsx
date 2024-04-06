@@ -59,11 +59,11 @@ export default function SignInSide({ toggleSignUp }) {
 
 		// console.log('data = ', data)
 		loginAPI(data)
-			.then(() => {
+			.then((res) => {
 				// TODO: continue here
+				console.log('🚀 ~ file: Login.jsx:64 ~ .then ~ res:', res)
 			})
 			.catch((error) => {
-				// console.log('error = ', error)
 				// TODO: write response from API to mapping here
 				if (error.response && error.response.data) {
 
