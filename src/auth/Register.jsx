@@ -1,19 +1,19 @@
-import { joiResolver } from '@hookform/resolvers/joi'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Avatar from '@mui/material/Avatar'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Checkbox from '@mui/material/Checkbox'
-import Container from '@mui/material/Container'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import Joi from 'joi'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
-import { registerAPI } from '~/apis'
+import {joiResolver} from '@hookform/resolvers/joi';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Container from '@mui/material/Container';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Joi from 'joi';
+import {useForm} from 'react-hook-form';
+import {toast} from 'react-toastify';
+import {registerAPI} from '~/apis';
 
 function Copyright(props) {
 	return (
@@ -59,12 +59,7 @@ export default function SignUp({
 	})
 	const onSubmit = (data) => {
 		registerAPI(data)
-			.then((res) => {
-				// TODO: continue here
-				const { token, refreshToken } = res
-				localStorage.setItem('token', token)
-				localStorage.setItem('refreshToken', refreshToken)
-
+			.then(() => {
 				toast.success('Register successfully', {
 					position: 'top-right',
 					autoClose: 5000,
