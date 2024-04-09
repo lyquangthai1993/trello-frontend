@@ -10,9 +10,9 @@ import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import bcrypt from 'bcryptjs'
 import Joi from 'joi'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { loginAPI } from '~/apis'
 
 function Copyright(props) {
@@ -28,7 +28,7 @@ function Copyright(props) {
 	)
 }
 
-// Define your schema
+// Define your schema verify code
 const schema = Joi.object({
 	email: Joi.string().email({ tlds: { allow: false } })
 		.required()
@@ -46,6 +46,7 @@ const schema = Joi.object({
 })
 
 export default function SignInSide({ toggleSignUp }) {
+	const navigate = useNavigate()
 	const {
 		register, handleSubmit,
 		setError,
@@ -61,9 +62,17 @@ export default function SignInSide({ toggleSignUp }) {
 		loginAPI(data)
 			.then((res) => {
 				// TODO: continue here
-				console.log('🚀 ~ file: Login.jsx:64 ~ .then ~ res:', res)
+				// console.log('🚀 ~ file: Login.jsx:64 ~ .then ~ res:', res)
+				const { token, refreshToken } = res
+				localStorage.setItem('token', token)
+				localStorage.setItem('refreshToken', refreshToken)
+
+				// go to home page by react-router-dom
+				navigate('/')
+
 			})
 			.catch((error) => {
+				// console.log('error = ', error)
 				// TODO: write response from API to mapping here
 				if (error.response && error.response.data) {
 

@@ -41,6 +41,12 @@ export const loginAPI = async (data) => {
 	return request.data
 }
 
+export const registerAPI = async (data) => {
+	const request = await axiosInstance.post('/v1/auth/register', data, {
+		skipInterceptor: true
+	})
+	return request.data
+}
 
 const errorHandler = (error) => {
 
@@ -58,6 +64,14 @@ const errorHandler = (error) => {
 	return Promise.reject({ ...error })
 }
 
+axiosInstance.interceptors.request.use(async (config) => {
+	const token = localStorage.getItem('token')
+	if (token) {
+		config.headers.Authorization = `Bearer ${token}`
+	}
+
+	return config
+})
 
 // response interceptor for handling common errors (e.g. HTTP 500)
 axiosInstance.interceptors.response.use(

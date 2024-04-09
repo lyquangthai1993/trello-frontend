@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Card from '~/pages/Boards/BoardContent/ListColumns/Column/ListCards/Card/Card'
 
 function ListCards({ cards }) {
-    return (
+	return (
 	  <SortableContext items={cards?.map(card => card._id)} strategy={verticalListSortingStrategy}>
 		  <Box sx={{
 			  p: '0 5px 5px 5px',
@@ -28,7 +28,7 @@ function ListCards({ cards }) {
 			  {cards?.map((card) => <Card temporaryHideMedia key={card._id} card={card}/>)}
 		  </Box>
 	  </SortableContext>
-    )
+	)
 }
 
 export default ListCards

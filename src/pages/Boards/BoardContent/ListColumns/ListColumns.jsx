@@ -9,60 +9,60 @@ import { toast } from 'react-toastify'
 import Column from '~/pages/Boards/BoardContent/ListColumns/Column/Column'
 
 function ListColumns({ columns, boardId, createNewColumn, createNewCard, deleteColumn }) {
-    const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
-    const [newColumnTitle, setNewColumnTitle] = useState('')
-    const toggleNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
-    const addNewColumn = () => {
-    // call api
-    // add new column to columns
-    // close form
-        if (newColumnTitle.trim() === '') {
-            toast.error('Column title is required', {
-                position: 'top-right'
-            })
-            return
-        }
+	const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
+	const [newColumnTitle, setNewColumnTitle] = useState('')
+	const toggleNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
+	const addNewColumn = () => {
+		// call api
+		// add new column to columns
+		// close form
+		if (newColumnTitle.trim() === '') {
+			toast.error('Column title is required', {
+				position: 'top-right'
+			})
+			return
+		}
 
-        const newColumnData = {
-            title: newColumnTitle,
-            boardId
-        }
+		const newColumnData = {
+			title: newColumnTitle,
+			boardId
+		}
 
-        createNewColumn(newColumnData)
+		createNewColumn(newColumnData)
 
-        toggleNewColumnForm()
-        setNewColumnTitle('')
-    }
+		toggleNewColumnForm()
+		setNewColumnTitle('')
+	}
 
 
-    /* Sortable context: https://dndkit.com/docs/sortable-context
+	/* Sortable context: https://dndkit.com/docs/sortable-context
 			  phải parse _id của column thành string để tránh lỗi: "The provided id must be a string or a number."
 		  */
-    return (
+	return (
 	  <SortableContext items={columns?.map(column => column._id)} strategy={horizontalListSortingStrategy}>
 		  <Box
-                sx={{
-                    bgcolor: 'inherit',
-                    display: 'flex',
-                    width: '100%',
-                    height: '100%',
-                    overflowX: 'auto',
-                    overflowY: 'hidden',
-                    '&::-webkit-scrollbar-track': {
-                        m: 2
-                    }
-                }}>
+				sx={{
+					bgcolor: 'inherit',
+					display: 'flex',
+					width: '100%',
+					height: '100%',
+					overflowX: 'auto',
+					overflowY: 'hidden',
+					'&::-webkit-scrollbar-track': {
+						m: 2
+					}
+				}}>
 
 			  {columns?.map((column) => (
-                    <Column key={column._id}
-                        column={column}
-                        deleteColumn={deleteColumn}
-                        createNewCard={createNewCard}
-                    />
+					<Column key={column._id}
+						column={column}
+						deleteColumn={deleteColumn}
+						createNewCard={createNewCard}
+					/>
 			  ))}
 
 			  {!openNewColumnForm ?
-                    (<Box
+					(<Box
 				  variant="outlined"
 				  onClick={toggleNewColumnForm}
 				  sx={{
@@ -74,19 +74,19 @@ function ListColumns({ columns, boardId, createNewColumn, createNewCard, deleteC
 					  bgcolor: '#ffffff3d'
 				  }}>
 
-                        <Button sx={{
-                            color: 'white',
-                            width: '100%',
-                            justifyContent: 'start',
-                            pl: 2.5,
-                            py: 1
-                        }} startIcon={<NoteAdd/>}
-                        >
+						<Button sx={{
+							color: 'white',
+							width: '100%',
+							justifyContent: 'start',
+							pl: 2.5,
+							py: 1
+						}} startIcon={<NoteAdd/>}
+						>
 						Add new column
-                        </Button>
-                    </Box>)
-                    :
-                    (<Box
+						</Button>
+					</Box>)
+					:
+					(<Box
 				  variant="outlined"
 				  sx={{
 					  minWidth: '250px',
@@ -101,7 +101,7 @@ function ListColumns({ columns, boardId, createNewColumn, createNewCard, deleteC
 					  gap: 1
 				  }}>
 
-                        <TextField
+						<TextField
 					  label="Enter column title"
 					  type="text"
 					  size={'small'}
@@ -125,13 +125,13 @@ function ListColumns({ columns, boardId, createNewColumn, createNewCard, deleteC
 							  '&.Mui-focuced fieldset': { borderColor: 'white' }
 						  }
 					  }}
-                        />
-                        <Box sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1
-                        }}>
-                            <Button
+						/>
+						<Box sx={{
+							display: 'flex',
+							alignItems: 'center',
+							gap: 1
+						}}>
+							<Button
 						  variant={'contained'}
 						  color={'success'}
 						  size={'small'}
@@ -142,19 +142,19 @@ function ListColumns({ columns, boardId, createNewColumn, createNewCard, deleteC
 							  '&:hover': { bgcolor: (theme) => theme.palette.success.main }
 						  }}
 						  onClick={addNewColumn}
-                            >Add column</Button>
-                            <Close
+							>Add column</Button>
+							<Close
 						  fontSize={'small'}
 						  sx={{ color: 'white', cursor: 'pointer', '&:hover': { color: (theme) => theme.palette.warning.light } }}
 						  onClick={toggleNewColumnForm}
-                            />
-                        </Box>
-                    </Box>)
+							/>
+						</Box>
+					</Box>)
 			  }
 
 		  </Box>
 	  </SortableContext>
-    )
+	)
 }
 
 export default ListColumns

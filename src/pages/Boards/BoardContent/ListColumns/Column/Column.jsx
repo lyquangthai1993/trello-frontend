@@ -11,79 +11,79 @@ import { toast } from 'react-toastify'
 import ListCards from '~/pages/Boards/BoardContent/ListColumns/Column/ListCards/ListCards'
 
 function Column({ column, createNewCard, deleteColumn }) {
-    const {
-        attributes,
-        listeners,
-        setNodeRef,
-        transform,
-        transition,
-        isDragging
-    } = useSortable({
-        id: column._id,
-        data: { ...column }
-    })
-    const dndKitColumnStyles = {
-    // touchAction: 'none',
-    // nếu sử dụng transform: CSS.Transform sẽ lỗi dạng stretch column
-    // github issue: https://github.com/clauderic/dnd-kit/issues/117
-        transform: CSS.Translate.toString(transform),
-        transition,
-        height: '100%',
-        opacity: isDragging ? 0.5 : undefined
+	const {
+		attributes,
+		listeners,
+		setNodeRef,
+		transform,
+		transition,
+		isDragging
+	} = useSortable({
+		id: column._id,
+		data: { ...column }
+	})
+	const dndKitColumnStyles = {
+		// touchAction: 'none',
+		// nếu sử dụng transform: CSS.Transform sẽ lỗi dạng stretch column
+		// github issue: https://github.com/clauderic/dnd-kit/issues/117
+		transform: CSS.Translate.toString(transform),
+		transition,
+		height: '100%',
+		opacity: isDragging ? 0.5 : undefined
 
-    }
+	}
 
-    const [anchorEl, setAnchorEl] = useState(null)
-    const open = Boolean(anchorEl)
+	const [anchorEl, setAnchorEl] = useState(null)
+	const open = Boolean(anchorEl)
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget)
-    }
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget)
+	}
+	const handleClose = () => {
+		setAnchorEl(null)
+	}
 
-    // const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
-    const orderedCards = column?.cards
+	// const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+	const orderedCards = column?.cards
 
-    const [openNewCardForm, setOpenNewCardForm] = useState(false)
-    const [newCardTitle, setNewCardTitle] = useState('')
-    const toggleNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
-    const addNewCard = () => {
-    // call api
-    // add new column to columns
-    // close form
-        if (newCardTitle.trim() === '') {
-            toast.error('Column title is required', {
-                position: 'top-right'
-            })
-            return
-        }
+	const [openNewCardForm, setOpenNewCardForm] = useState(false)
+	const [newCardTitle, setNewCardTitle] = useState('')
+	const toggleNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
+	const addNewCard = () => {
+		// call api
+		// add new column to columns
+		// close form
+		if (newCardTitle.trim() === '') {
+			toast.error('Column title is required', {
+				position: 'top-right'
+			})
+			return
+		}
 	  createNewCard({
 		  columnId: column._id,
 		  title: newCardTitle.trim()
 	  })
-        toggleNewCardForm()
-        setNewCardTitle('')
-    }
+		toggleNewCardForm()
+		setNewCardTitle('')
+	}
 
-    const handleDeleteColumn = (columnId) => {
-        deleteColumn(columnId)
-    }
+	const handleDeleteColumn = (columnId) => {
+		deleteColumn(columnId)
+	}
 
-    return (
+	return (
 	  <div ref={setNodeRef} style={dndKitColumnStyles} {...attributes} >
 		  <Box
-                sx={{
-                    minWidth: '300px',
-                    maxWidth: '300px',
-                    bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0'),
-                    ml: 2,
-                    borderRadius: '6px',
-                    height: 'fit-content',
-                    maxHeight: (theme) => `calc(${theme.trelloCutom.boardContentHeight} - ${theme.spacing(5)})`
-                }}
-                {...listeners}
+				sx={{
+					minWidth: '300px',
+					maxWidth: '300px',
+					bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0'),
+					ml: 2,
+					borderRadius: '6px',
+					height: 'fit-content',
+					maxHeight: (theme) => `calc(${theme.trelloCutom.boardContentHeight} - ${theme.spacing(5)})`
+				}}
+				{...listeners}
 		  >
 			  <Box sx={{
 				  height: (theme) => theme.trelloCutom.columnHeaderHeight,
@@ -93,41 +93,41 @@ function Column({ column, createNewCard, deleteColumn }) {
 				  justifyContent: 'space-between'
 			  }}>
 				  <Typography
-                        variant={'h6'}
-                        sx={{
-                            fontSize: '1rem',
-                            fontWeight: 'bold',
-                            cursor: 'pointer'
-                        }}
+						variant={'h6'}
+						sx={{
+							fontSize: '1rem',
+							fontWeight: 'bold',
+							cursor: 'pointer'
+						}}
 				  >{column.title}
 				  </Typography>
 				  <Box>
 					  <Tooltip title={'More option'}>
 						  <ExpandMore
-                                sx={{ color: 'text.primary', cursor: 'pointer' }}
-                                id="basic-column-dropdown"
-                                aria-controls={open ? 'basic-menu-column-dropdown' : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={open ? 'true' : undefined}
-                                onClick={handleClick}
+								sx={{ color: 'text.primary', cursor: 'pointer' }}
+								id="basic-column-dropdown"
+								aria-controls={open ? 'basic-menu-column-dropdown' : undefined}
+								aria-haspopup="true"
+								aria-expanded={open ? 'true' : undefined}
+								onClick={handleClick}
 						  />
 					  </Tooltip>
 
 					  <Menu
-                            id="basic-menu-column-dropdown"
-                            aria-labelledby="basic-column-dropdown"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
+							id="basic-menu-column-dropdown"
+							aria-labelledby="basic-column-dropdown"
+							anchorEl={anchorEl}
+							open={open}
+							onClose={handleClose}
 			  onClick={handleClose}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left'
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left'
-                            }}
+							anchorOrigin={{
+								vertical: 'top',
+								horizontal: 'left'
+							}}
+							transformOrigin={{
+								vertical: 'top',
+								horizontal: 'left'
+							}}
 					  >
 						  <MenuItem onClick={() => handleDeleteColumn(column?._id)}>
 							  <ListItemIcon><DeleteForever fontSize={'small'}/></ListItemIcon>
@@ -149,25 +149,25 @@ function Column({ column, createNewCard, deleteColumn }) {
 				  p: 1
 			  }}>
 				  {!openNewCardForm ?
-                        <Box sx={{
-                            height: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between'
-                        }}>
-                            <Button startIcon={<AddCard/>} onClick={toggleNewCardForm}>Add new card</Button>
-                            <Tooltip title={'Drag to move'}>
-                                <DragHandle sx={{ cursor: 'pointer' }}/>
-                            </Tooltip>
-                        </Box>
-                        :
-                        <Box sx={{
-                            height: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1
-                        }}>
-                            <TextField
+						<Box sx={{
+							height: '100%',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'space-between'
+						}}>
+							<Button startIcon={<AddCard/>} onClick={toggleNewCardForm}>Add new card</Button>
+							<Tooltip title={'Drag to move'}>
+								<DragHandle sx={{ cursor: 'pointer' }}/>
+							</Tooltip>
+						</Box>
+						:
+						<Box sx={{
+							height: '100%',
+							display: 'flex',
+							alignItems: 'center',
+							gap: 1
+						}}>
+							<TextField
 						  label="Enter card title"
 						  type="text"
 						  size={'small'}
@@ -191,9 +191,9 @@ function Column({ column, createNewCard, deleteColumn }) {
 								  '&.Mui-focuced fieldset': { borderColor: (theme) => theme.palette.primary.main }
 							  }
 						  }}
-                            />
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <Button
+							/>
+							<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+								<Button
 							  variant={'contained'}
 							  color={'success'}
 							  size={'small'}
@@ -204,19 +204,19 @@ function Column({ column, createNewCard, deleteColumn }) {
 								  '&:hover': { bgcolor: (theme) => theme.palette.success.main }
 							  }}
 							  onClick={addNewCard}>Add</Button>
-                                <Close
+								<Close
 							  fontSize={'small'}
 							  sx={{ color: (theme) => theme.palette.warning.light, cursor: 'pointer', '&:hover': { color: (theme) => theme.palette.warning.light } }}
 							  onClick={toggleNewCardForm}
-                                />
-                            </Box>
-                        </Box>
+								/>
+							</Box>
+						</Box>
 				  }
 
 			  </Box>
 		  </Box>
 	  </div>
-    )
+	)
 }
 
 export default Column

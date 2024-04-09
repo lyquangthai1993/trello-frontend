@@ -5,7 +5,7 @@ import NotFoundPage from '~/pages/NotFoundPage/NoteFoundPage'
 import Board from './pages/Boards/_id'
 
 export default function App() {
-	const isAuthenticated = false // TODO: Replace this with your authentication check
+	const isAuthenticated = !!localStorage.getItem('token')
 
 	return (
 		<Router>
