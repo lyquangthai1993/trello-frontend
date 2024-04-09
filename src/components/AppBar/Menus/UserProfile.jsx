@@ -29,7 +29,7 @@ export default function PositionedMenu() {
 					color: 'white'
 				}}
 			>
-					Workspaces
+				User
 			</Button>
 			<Menu
 				id="basic-menu-workspaces"
