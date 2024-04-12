@@ -5,6 +5,11 @@ import { APIROOT } from '~/utils/constant'
 const axiosInstance = axios.create({
 	baseURL: APIROOT
 })
+
+export const fetchBoardsAPI = async () => {
+	const request = await axiosInstance.get('/v1/boards')
+	return request.data
+}
 export const fetchBoardDetailAPI = async (boardId) => {
 	const request = await axiosInstance.get(`/v1/boards/${boardId}`)
 	return request.data

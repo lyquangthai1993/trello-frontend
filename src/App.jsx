@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import AuthPage from '~/auth/AuthPage'
 import ProtectedRoute from '~/auth/ProtectedRoute'
 import NotFoundPage from '~/pages/NotFoundPage/NoteFoundPage'
-import Board from './pages/Boards/_id'
+import Board from './pages/Boards/Boards'
 
 export default function App() {
 	const isAuthenticated = !!localStorage.getItem('token')
