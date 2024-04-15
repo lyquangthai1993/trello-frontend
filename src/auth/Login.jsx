@@ -11,9 +11,13 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Joi from 'joi'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { loginAPI } from '~/apis'
+import LoadingSpinner from '~/components/LoadingSpinner/LoadingSpinner'
+import { setToken } from '~/redux/authSlice'
 
 function Copyright(props) {
 	return (
@@ -46,7 +50,9 @@ const schema = Joi.object({
 })
 
 export default function SignInSide({ toggleSignUp }) {
+	const [loadingSpinner, setLoadingSpinner] = useState(false)
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 	const {
 		register, handleSubmit,
 		setError,
@@ -56,22 +62,24 @@ export default function SignInSide({ toggleSignUp }) {
 	})
 
 	const onSubmit = async (data) => {
-		// data.password = bcrypt.hashSync(data.password, 10)
-
-		// console.log('data = ', data)
+		setLoadingSpinner(true)
 		loginAPI(data)
 			.then((res) => {
-				// TODO: continue here
-				// console.log('🚀 ~ file: Login.jsx:64 ~ .then ~ res:', res)
+				setLoadingSpinner(false)
 				const { token, refreshToken } = res
-				localStorage.setItem('token', token)
-				localStorage.setItem('refreshToken', refreshToken)
+
+
+				// set redux store current user
+				dispatch(setToken({
+					token,
+					refreshToken
+				}))
 
 				// go to home page by react-router-dom
 				navigate('/')
-
 			})
 			.catch((error) => {
+				setLoadingSpinner(false)
 				// console.log('error = ', error)
 				// TODO: write response from API to mapping here
 				if (error.response && error.response.data) {
@@ -94,6 +102,7 @@ export default function SignInSide({ toggleSignUp }) {
 
 	return (
 		<Grid container component="main" sx={{ height: '100vh' }}>
+			{loadingSpinner && <LoadingSpinner/>}
 			<Grid
 				item
 				xs={false}
@@ -144,7 +153,7 @@ export default function SignInSide({ toggleSignUp }) {
 							autoFocus
 							error={Boolean(errors.email)}
 							sx={{
-								color:''
+								color: ''
 							}}
 						/>
 						{errors.email &&

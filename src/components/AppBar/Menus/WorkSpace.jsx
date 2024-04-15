@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem'
 import * as React from 'react'
 
 export default function PositionedMenu() {
+
 	const [anchorEl, setAnchorEl] = React.useState(null)
 	const open = Boolean(anchorEl)
 	const handleClick = (event) => {
@@ -44,9 +45,8 @@ export default function PositionedMenu() {
 					horizontal: 'left'
 				}}
 		  >
-			  <MenuItem onClick={handleClose}>Profile</MenuItem>
-			  <MenuItem onClick={handleClose}>My account</MenuItem>
-			  <MenuItem onClick={handleClose}>Logout</MenuItem>
+				<MenuItem onClick={handleClose}>Board List</MenuItem>
+
 		  </Menu>
 	  </div>
 	)
