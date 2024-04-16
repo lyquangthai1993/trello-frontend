@@ -26,8 +26,7 @@ function AppBar() {
 				</Box>
 				<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 					<WorkSpace/>
-					<WorkSpace/>
-					<WorkSpace/>
+
 					<Button
 						variant="outlined"
 						startIcon={<LibraryAdd/>}

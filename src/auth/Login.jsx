@@ -3,8 +3,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
@@ -180,10 +178,11 @@ export default function SignInSide({ toggleSignUp }) {
 									</Typography>
 						}
 
-						<FormControlLabel
-							control={<Checkbox value="remember" color="primary"/>}
-							label="Remember me"
-						/>
+						{/*<FormControlLabel*/}
+						{/*	control={<Checkbox value="remember" color="primary"/>}*/}
+						{/*	label="Remember me"*/}
+						{/*/>*/}
+
 						<Button
 							type="submit"
 							fullWidth

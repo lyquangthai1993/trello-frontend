@@ -20,6 +20,11 @@ export const updateBoardDetailAPI = async (boardId, updateData) => {
 	return request.data
 }
 
+export const createBoardAPI = async (data) => {
+	const request = await axiosInstance.post('/v1/boards', data)
+	return request.data
+}
+
 export const createNewColumnAPI = async (newColumn) => {
 	const request = await axiosInstance.post('/v1/columns', newColumn)
 	return request.data

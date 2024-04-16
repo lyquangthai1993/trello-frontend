@@ -1,19 +1,19 @@
-import {joiResolver} from '@hookform/resolvers/joi';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import Container from '@mui/material/Container';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Joi from 'joi';
-import {useForm} from 'react-hook-form';
-import {toast} from 'react-toastify';
-import {registerAPI} from '~/apis';
+import { joiResolver } from '@hookform/resolvers/joi'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Avatar from '@mui/material/Avatar'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import Container from '@mui/material/Container'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Grid from '@mui/material/Grid'
+import Link from '@mui/material/Link'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import Joi from 'joi'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
+import { registerAPI } from '~/apis'
 
 function Copyright(props) {
 	return (
@@ -43,6 +43,13 @@ const schema = Joi.object({
 		.messages({
 			'string.pattern.base': 'Password must be at least 6 characters',
 			'string.empty': 'Password is required'
+		}),
+	confirmPassword: Joi.string()
+		.valid(Joi.ref('password'))
+		.required()
+		.messages({
+			'any.only': 'Confirm password does not match',
+			'string.empty': 'Confirm password is required'
 		})
 })
 
@@ -58,6 +65,8 @@ export default function SignUp({
 		resolver: joiResolver(schema)
 	})
 	const onSubmit = (data) => {
+		delete data.confirmPassword
+
 		registerAPI(data)
 			.then(() => {
 				toast.success('Register successfully', {
@@ -183,6 +192,24 @@ export default function SignUp({
 									</Typography>
 							}
 					  </Grid>
+						<Grid item xs={12}>
+							<TextField
+								{...register('confirmPassword')}
+								name="confirmPassword"
+								required
+								fullWidth
+								label="Confirm Password"
+								type="password"
+								id="confirmPassword"
+								autoComplete="new-password"
+								error={Boolean(errors.confirmPassword)}
+							/>
+							{errors.confirmPassword &&
+									<Typography variant="body2" color="error" style={{ marginTop: '5px' }}>
+										{errors.confirmPassword.message}
+									</Typography>
+							}
+						</Grid>
 					  <Grid item xs={12}>
 						  <FormControlLabel
 								control={<Checkbox value="allowExtraEmails" color="primary"/>}
