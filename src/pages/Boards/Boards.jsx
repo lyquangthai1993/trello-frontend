@@ -25,7 +25,7 @@ function Boards() {
 	const handleCreateBoard = (data) => {
 		createBoardAPI(data)
 			.then((newBoard) => {
-				setBoards([newBoard.data, ...boards])
+				setBoards([newBoard, ...boards])
 				toggleNewBoardForm()
 			})
 	}
@@ -59,7 +59,7 @@ function Boards() {
 				margin: '-5px'
 			}}>
 				{boards.map(board => (
-					<Card key={board._id}
+					<Card key={board?._id}
 						sx={{
 							minWidth: 400, marginBottom: 2, cursor: 'pointer',
 							border: (theme) => `1px solid ${theme.palette.primary.main}`
