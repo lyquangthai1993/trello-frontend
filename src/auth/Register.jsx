@@ -11,9 +11,11 @@ import Link from '@mui/material/Link'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Joi from 'joi'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { registerAPI } from '~/apis'
+import LoadingSpinner from '~/components/LoadingSpinner/LoadingSpinner'
 
 function Copyright(props) {
 	return (
@@ -56,7 +58,7 @@ const schema = Joi.object({
 export default function SignUp({
 								   toggleSignUp
 							   }) {
-
+	const [loadingSpinner, setLoadingSpinner] = useState(false)
 	const {
 		register, handleSubmit,
 		setError,
@@ -66,9 +68,11 @@ export default function SignUp({
 	})
 	const onSubmit = (data) => {
 		delete data.confirmPassword
-
+		setLoadingSpinner(true)
 		registerAPI(data)
 			.then(() => {
+				setLoadingSpinner(false)
+
 				toast.success('Register successfully', {
 					position: 'top-right',
 					autoClose: 5000,
@@ -83,6 +87,7 @@ export default function SignUp({
 
 			})
 			.catch((error) => {
+				setLoadingSpinner(false)
 				if (error.response && error.response.data) {
 					// assuming error.response.data is an object mapping field names to error messages
 					for (const field in error?.response?.data?.fields) {
@@ -103,7 +108,7 @@ export default function SignUp({
 
 	return (
 	  <Container component="main" maxWidth="xs">
-
+			{loadingSpinner && <LoadingSpinner/>}
 		  <Box
 				sx={{
 					marginTop: 8,

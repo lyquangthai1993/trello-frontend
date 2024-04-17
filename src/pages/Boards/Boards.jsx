@@ -1,4 +1,5 @@
-import { AddCard } from '@mui/icons-material'
+import { AddCard, Person, Public } from '@mui/icons-material'
+import { IconButton } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
@@ -25,6 +26,7 @@ function Boards() {
 		createBoardAPI(data)
 			.then((newBoard) => {
 				setBoards([newBoard.data, ...boards])
+				toggleNewBoardForm()
 			})
 	}
 	useEffect(() => {
@@ -59,22 +61,28 @@ function Boards() {
 				{boards.map(board => (
 					<Card key={board._id}
 						sx={{
-							minWidth: 275, marginBottom: 2, cursor: 'pointer',
+							minWidth: 400, marginBottom: 2, cursor: 'pointer',
 							border: (theme) => `1px solid ${theme.palette.primary.main}`
 						}}
 						onClick={() => {
 							navigate(`/board/${board._id}`)
 						}}>
 						<CardContent>
-							<Typography variant="h5" component="div">
-								{board.title}
+							<Typography variant="h5" component="div" color="text.primary">
+								{board?.title}
 							</Typography>
+							<Typography variant="body2">
+								{board?.description}
+							</Typography>
+							<IconButton aria-label="Type">
+								{board?.type === 'public' ? <Public/> : <Person/>}
+							</IconButton>
 						</CardContent>
 					</Card>
 				))}
 			</Box>
-			<Button startIcon={<AddCard/>} onClick={toggleNewBoardForm} createBoard={handleCreateBoard}>Add new board</Button>
-			{openNewBoardForm ? <FormNewBoard toggleNewBoardForm={toggleNewBoardForm}/> : <></>}
+			<Button startIcon={<AddCard/>} onClick={toggleNewBoardForm}>Add new board</Button>
+			{openNewBoardForm ? <FormNewBoard createBoard={handleCreateBoard} toggleNewBoardForm={toggleNewBoardForm}/> : <></>}
 			<Button
 				variant="contained"
 				color="primary"
