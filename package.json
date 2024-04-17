@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env BUILD_MODE=dev && vite --host",
-    "build": "vite build --base=./",
+    "build": "vite build",
     "lint": "eslint src --ext js,jsx --fix --report-unused-disable-directives --max-warnings 0",
     "serve": "vite preview"
   },
