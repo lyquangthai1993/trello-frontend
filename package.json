@@ -3,8 +3,8 @@
   "version": "5.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "cross-env BUILD_MODE=dev && vite --host",
+    "build": "vite build --base=./",
     "lint": "eslint src --ext js,jsx --fix --report-unused-disable-directives --max-warnings 0",
     "serve": "vite preview"
   },
@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
+    "cross-env": "^7.0.3",
     "joi": "^17.12.3",
     "lodash": "^4.17.21",
     "material-ui-confirm": "^3.0.11",
