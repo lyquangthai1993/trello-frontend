@@ -76,9 +76,10 @@ const refreshToken = async () => {
 }
 
 const errorHandler = async (error) => {
-	console.log('error.response.data.message = ', error.response.data.message)
-	console.log('error.response.statusText = ', error.response.statusText)
-	console.log('error.response.status = ', error.response.status)
+	// console.log('error.response.data.message = ', error.response.data.message)
+	// console.log('error.response.statusText = ', error.response.statusText)
+	// console.log('error.response.status = ', error.response.status)
+	console.log('error.response = ', error.response)
 
 	toast.error(`${error.response.data.message || error.response.statusText}`, {
 		position: 'top-right',
