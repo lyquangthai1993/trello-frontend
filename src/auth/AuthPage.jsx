@@ -7,6 +7,7 @@ import { useAuth } from '~/auth/UseAuth'
 function AuthPage() {
 	const navigate = useNavigate()
 	const { isAuthenticated } = useAuth()
+	console.log('isAuthenticated = ', isAuthenticated)
 
 	useEffect(() => {
 		if (isAuthenticated) {

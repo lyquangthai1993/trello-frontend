@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { createBrowserHistory } from 'history'
 import { toast } from 'react-toastify'
+import { logout } from '~/redux/authSlice'
+import store from '~/redux/store' // replace with the actual path
 import { APIROOT } from '~/utils/constant'
 
 const history = createBrowserHistory()
@@ -67,6 +69,7 @@ export const registerAPI = async (data) => {
 const refreshToken = async () => {
 	// Replace '/refresh-token' with your refresh token endpoint
 	const response = await axiosInstance.post('/v1/auth/refresh-token', {
+		skipInterceptor: true,
 		refreshToken: localStorage.getItem('refreshToken')
 	})
 	return response.data.token
@@ -95,12 +98,6 @@ axiosInstance.interceptors.request.use(async (config) => {
 	return config
 })
 
-function handleDirectLogin() {
-	localStorage.removeItem('token')
-	localStorage.removeItem('refreshToken')
-	history.push('/login')
-}
-
 axiosInstance.interceptors.response.use(
 	(response) => {
 		return response
@@ -109,11 +106,7 @@ axiosInstance.interceptors.response.use(
 		const { response, config } = error
 		const status = response?.status
 
-		if (error.config && error.config.skipInterceptor === true) {
-			return Promise.reject(error)
-		}
-
-		// Kiểm tra mã lỗi có phải là 401 hoặc 403 hay không
+		// Kiểm tra mã lỗi có phải là 401 hoặc 403 hay không, vao case het han token hoac token khong hop le
 		if (status === 401 || status === 403) {
 			// Chúng ta sẽ Thực hiện kịch bản refresh token tại đây
 
@@ -132,12 +125,19 @@ axiosInstance.interceptors.response.use(
 						}
 					})
 				} catch (errorTryRefreshToken) {
+					// console.log('errorTryRefreshToken = ', errorTryRefreshToken)
 					// handle loi vao redux
-					handleDirectLogin()
+					store.dispatch(logout()) // Dispatch the logout action
+
 				}
 			} else {
-				handleDirectLogin()
+				store.dispatch(logout()) // Dispatch the logout action
+
 			}
+		}
+
+		if (error.config && error.config.skipInterceptor === true) {
+			return Promise.reject(error)
 		}
 
 		return errorHandler(error)
