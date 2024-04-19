@@ -70,7 +70,7 @@ export default function SignInPage({ toggleSignUp }) {
 				// set redux store current user
 				dispatch(setToken({
 					token,
-					refreshToken: '666'
+					refreshToken
 				}))
 
 				// go to home page by react-router-dom
