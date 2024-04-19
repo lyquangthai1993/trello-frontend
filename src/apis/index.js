@@ -76,6 +76,9 @@ const refreshToken = async () => {
 }
 
 const errorHandler = async (error) => {
+	console.log('error.response.data.message = ', error.response.data.message)
+	console.log('error.response.statusText = ', error.response.statusText)
+
 	toast.error(`${error.response.data.message || error.response.statusText}`, {
 		position: 'top-right',
 		autoClose: 5000,
