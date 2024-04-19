@@ -81,7 +81,7 @@ const errorHandler = async (error) => {
 	// console.log('error.response.status = ', error.response.status)
 	console.log('error.response = ', error.response)
 
-	toast.error(`${error.response.data.message || error.response.statusText}`, {
+	toast.error(`${error.response.data || error.response.data.message || error.response.statusText}`, {
 		position: 'top-right',
 		autoClose: 5000,
 		hideProgressBar: false,
