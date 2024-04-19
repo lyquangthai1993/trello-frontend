@@ -46,7 +46,7 @@ export default function PositionedMenu() {
 					horizontal: 'left'
 				}}
 		  >
-				<MenuItem onClick={() => navigate('/')}>Board List</MenuItem>
+				<MenuItem></MenuItem>
 
 		  </Menu>
 	  </div>

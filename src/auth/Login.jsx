@@ -47,7 +47,7 @@ const schema = Joi.object({
 
 })
 
-export default function SignInSide({ toggleSignUp }) {
+export default function SignInPage({ toggleSignUp }) {
 	const [loadingSpinner, setLoadingSpinner] = useState(false)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
@@ -70,7 +70,7 @@ export default function SignInSide({ toggleSignUp }) {
 				// set redux store current user
 				dispatch(setToken({
 					token,
-					refreshToken
+					refreshToken: '666'
 				}))
 
 				// go to home page by react-router-dom

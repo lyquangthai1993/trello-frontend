@@ -55,7 +55,7 @@ const schema = Joi.object({
 		})
 })
 
-export default function SignUp({
+export default function SignUpPage({
 								   toggleSignUp
 							   }) {
 	const [loadingSpinner, setLoadingSpinner] = useState(false)

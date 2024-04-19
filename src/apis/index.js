@@ -1,11 +1,16 @@
 import axios from 'axios'
+import { createBrowserHistory } from 'history'
 import { toast } from 'react-toastify'
 import { APIROOT } from '~/utils/constant'
+
+const history = createBrowserHistory()
+
 // axios instance for making requests
 const axiosInstance = axios.create({
 	baseURL: APIROOT
 })
 console.log('APIROOT = ', APIROOT)
+
 export const fetchBoardsAPI = async () => {
 	const request = await axiosInstance.get('/v1/boards')
 	return request.data
@@ -58,8 +63,16 @@ export const registerAPI = async (data) => {
 	return request.data
 }
 
-const errorHandler = (error) => {
+// Function to refresh token
+const refreshToken = async () => {
+	// Replace '/refresh-token' with your refresh token endpoint
+	const response = await axiosInstance.post('/v1/auth/refresh-token', {
+		refreshToken: localStorage.getItem('refreshToken')
+	})
+	return response.data.token
+}
 
+const errorHandler = async (error) => {
 	toast.error(`${error.response.data.message || error.response.statusText}`, {
 		position: 'top-right',
 		autoClose: 5000,
@@ -67,7 +80,6 @@ const errorHandler = (error) => {
 		closeOnClick: true,
 		pauseOnHover: true,
 		draggable: true
-
 	})
 
 
@@ -83,15 +95,49 @@ axiosInstance.interceptors.request.use(async (config) => {
 	return config
 })
 
-// response interceptor for handling common errors (e.g. HTTP 500)
+function handleDirectLogin() {
+	localStorage.removeItem('token')
+	localStorage.removeItem('refreshToken')
+	history.push('/login')
+}
+
 axiosInstance.interceptors.response.use(
 	(response) => {
 		return response
 	},
-	(error) => {
-		// console.log('error.config = ', error.config)
+	async (error) => {
+		const { response, config } = error
+		const status = response?.status
+
 		if (error.config && error.config.skipInterceptor === true) {
 			return Promise.reject(error)
+		}
+
+		// Kiểm tra mã lỗi có phải là 401 hoặc 403 hay không
+		if (status === 401 || status === 403) {
+			// Chúng ta sẽ Thực hiện kịch bản refresh token tại đây
+
+			const refreshTokenValue = localStorage.getItem('refreshToken')
+			// console.log('refreshTokenValue = ', refreshTokenValue)
+			if (refreshTokenValue) {
+				try {
+					const newToken = await refreshToken()
+					localStorage.setItem('token', newToken)
+					// console.log('newToken = ', newToken)
+					return new Promise((resolve, reject) => {
+						if (newToken) {
+							resolve(axiosInstance(config))
+						} else {
+							reject({ ...error })
+						}
+					})
+				} catch (errorTryRefreshToken) {
+					// handle loi vao redux
+					handleDirectLogin()
+				}
+			} else {
+				handleDirectLogin()
+			}
 		}
 
 		return errorHandler(error)
