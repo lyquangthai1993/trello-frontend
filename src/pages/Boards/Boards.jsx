@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { createBoardAPI, fetchBoardsAPI } from '~/apis'
+import { useAuth } from '~/auth/UseAuth'
 import FormNewBoard from '~/pages/Boards/FormNewBoard'
 import { logout } from '~/redux/authSlice'
 
@@ -17,7 +18,7 @@ function Boards() {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [boards, setBoards] = useState([])
-
+	const { user } = useAuth()
 	const [openNewBoardForm, setOpenNewBoardForm] = useState(false)
 
 	const toggleNewBoardForm = () => setOpenNewBoardForm(!openNewBoardForm)
@@ -48,6 +49,12 @@ function Boards() {
 				justifyContent: 'center',
 				gap: 2
 			}}>
+			{user ?
+				<div>
+						Hello {user?.first_name} {user?.last_name}
+				</div>
+				: null}
+
 			<Typography variant="h4" component="div" gutterBottom>
 					Board List
 			</Typography>

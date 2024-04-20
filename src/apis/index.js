@@ -58,6 +58,11 @@ export const loginAPI = async (data) => {
 	return request.data
 }
 
+export const getCurrentUserAPI = async () => {
+	const request = await axiosInstance.get('/v1/auth/me') // replace with your actual endpoint
+	return request.data
+}
+
 export const registerAPI = async (data) => {
 	const request = await axiosInstance.post('/v1/auth/register', data, {
 		skipInterceptor: true
@@ -76,10 +81,7 @@ const refreshToken = async () => {
 }
 
 const errorHandler = async (error) => {
-	// console.log('error.response.data.message = ', error.response.data.message)
-	// console.log('error.response.statusText = ', error.response.statusText)
-	// console.log('error.response.status = ', error.response.status)
-	console.log('error.response = ', error.response)
+	// console.log('error.response = ', error.response)
 
 	let content = error?.response?.data?.message || error?.response?.statusText
 
