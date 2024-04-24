@@ -76,10 +76,11 @@ export default function SignInPage({ toggleSignUp }) {
 				// get current user's information
 				getCurrentUserAPI()
 					.then((data) => {
-						console.log('user ==================== ', data.user)
+						// console.log('user ==================== ', data.user)
 						dispatch(setCurrentUser(data.user)) // replace with your actual action
 					})
 					.catch((error) => {
+						// eslint-disable-next-line no-console
 						console.error('Failed to get current user', error)
 					})
 

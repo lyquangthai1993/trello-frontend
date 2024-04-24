@@ -1,6 +1,7 @@
-import {createContext} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {logout, setCurrentUser, setToken} from '~/redux/authSlice';
+import { createContext, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCurrentUserAPI } from '~/apis'
+import { logout, setCurrentUser, setToken } from '~/redux/authSlice'
 
 export const AuthContext = createContext({
 	isAuthenticated: !!localStorage.getItem('token'),
@@ -25,6 +26,21 @@ export function AuthProvider({ children }) {
 			dispatch(setToken(authToken))
 		}
 	}
+
+
+	useEffect(() => {
+		if (isAuthenticated) {
+
+			getCurrentUserAPI()
+				.then((data) => {
+					dispatch(setCurrentUser(data.user))
+				})
+				.catch((error) => {
+					// eslint-disable-next-line no-console
+					console.error('Failed to get current user', error)
+				})
+		}
+	}, [dispatch, isAuthenticated])
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

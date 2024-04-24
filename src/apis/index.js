@@ -1,17 +1,14 @@
 import axios from 'axios'
-import { createBrowserHistory } from 'history'
 import { toast } from 'react-toastify'
 import { logout } from '~/redux/authSlice'
 import store from '~/redux/store' // replace with the actual path
 import { APIROOT } from '~/utils/constant'
 
-const history = createBrowserHistory()
-
 // axios instance for making requests
 const axiosInstance = axios.create({
 	baseURL: APIROOT
 })
-console.log('APIROOT = ', APIROOT)
+// console.log('APIROOT = ', APIROOT)
 
 export const fetchBoardsAPI = async () => {
 	const request = await axiosInstance.get('/v1/boards')

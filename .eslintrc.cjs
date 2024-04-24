@@ -13,6 +13,7 @@ module.exports = {
 		'react-hooks',
 		'react-refresh'
 	],
+	ignorePatterns: ["cypress.config.js", "cypress/*"],
 	rules: {
 		'react-refresh/only-export-components': 'warn',
 		'react-hooks/rules-of-hooks': 'error',
