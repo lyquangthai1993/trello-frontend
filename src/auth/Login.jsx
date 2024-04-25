@@ -13,9 +13,9 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { loginAPI } from '~/apis'
+import { getCurrentUserAPI, loginAPI } from '~/apis'
 import LoadingSpinner from '~/components/LoadingSpinner/LoadingSpinner'
-import { setToken } from '~/redux/authSlice'
+import { setCurrentUser, setToken } from '~/redux/authSlice'
 
 function Copyright(props) {
 	return (
@@ -72,6 +72,17 @@ export default function SignInPage({ toggleSignUp }) {
 					token,
 					refreshToken
 				}))
+
+				// get current user's information
+				getCurrentUserAPI()
+					.then((data) => {
+						// console.log('user ==================== ', data.user)
+						dispatch(setCurrentUser(data.user)) // replace with your actual action
+					})
+					.catch((error) => {
+						// eslint-disable-next-line no-console
+						console.error('Failed to get current user', error)
+					})
 
 				// go to home page by react-router-dom
 				navigate('/')

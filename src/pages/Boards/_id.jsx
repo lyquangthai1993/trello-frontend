@@ -1,18 +1,18 @@
-import {CircularProgress, Typography} from '@mui/material';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import {cloneDeep, isEmpty} from 'lodash';
-import {useConfirm} from 'material-ui-confirm';
-import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
-import {toast} from 'react-toastify';
-import {createNewColumnAPI, creatNewCardAPI, deleteColumnAPI, fetchBoardDetailAPI, updateBoardDetailAPI, updateColumnDetailAPI} from '~/apis';
+import { CircularProgress, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import { cloneDeep, isEmpty } from 'lodash'
+import { useConfirm } from 'material-ui-confirm'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { createNewColumnAPI, creatNewCardAPI, deleteColumnAPI, fetchBoardDetailAPI, updateBoardDetailAPI, updateColumnDetailAPI } from '~/apis'
 // import { mockData } from '~/apis/mock-data'
-import AppBar from '~/components/AppBar/AppBar';
-import BoardBar from '~/pages/Boards/BoardBar/BoardBar';
-import BoardContent from '~/pages/Boards/BoardContent/BoardContent';
-import {generatePlaceholderCard} from '~/utils/fommater';
-import {mapOrder} from '~/utils/sorts';
+import AppBar from '~/components/AppBar/AppBar'
+import BoardBar from '~/pages/Boards/BoardBar/BoardBar'
+import BoardContent from '~/pages/Boards/BoardContent/BoardContent'
+import { generatePlaceholderCard } from '~/utils/fommater'
+import { mapOrder } from '~/utils/sorts'
 
 function Board() {
 	const [board, setBoard] = useState(null)
@@ -41,7 +41,7 @@ function Board() {
 				setBoard({})
 			})
 
-	}, [])
+	}, [id])
 
 	const confirm = useConfirm()
 

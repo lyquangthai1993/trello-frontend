@@ -20,6 +20,7 @@ function Boards() {
 	const navigate = useNavigate()
 	const [boards, setBoards] = useState([])
 	const [loadingSpinner, setLoadingSpinner] = useState(false)
+  
 	// const { user } = useAuth()
 	const [openNewBoardForm, setOpenNewBoardForm] = useState(false)
 
