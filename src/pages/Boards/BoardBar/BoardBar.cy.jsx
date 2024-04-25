@@ -14,7 +14,18 @@ describe('Board bar ------', () => {
 		cy.mount(
 				<CssVarsProvider theme={theme}>
 					<BoardBar board={mockdata}/>
-					<BoardContent board={mockdata}/>
+					<BoardContent board={mockdata}
+												createNewColumn={() => {
+												}}
+												moveColumns={() => {
+												}}
+												deleteColumn={() => {
+												}}
+												createNewCard={() => {
+												}}
+												moveCardInTheSameColumn={() => {
+												}}
+					/>
 				</CssVarsProvider>
 		);
 	});
