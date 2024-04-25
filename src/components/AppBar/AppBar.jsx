@@ -1,13 +1,13 @@
-import { Close, LibraryAdd, Search } from '@mui/icons-material'
-import Apps from '@mui/icons-material/Apps'
-import { InputAdornment, SvgIcon, TextField, Typography } from '@mui/material'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import { useState } from 'react'
-import { ReactComponent as Logo } from '~/assets/slack.svg'
-import UserProfile from '~/components/AppBar/Menus/UserProfile'
-import WorkSpace from '~/components/AppBar/Menus/WorkSpace'
-import ModeSelect from '~/components/ModeSelect/ModeSelect'
+import {Close, Search} from '@mui/icons-material';
+import Apps from '@mui/icons-material/Apps';
+import {InputAdornment, SvgIcon, TextField, Typography} from '@mui/material';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import {useState} from 'react';
+import {ReactComponent as Logo} from '~/assets/slack.svg';
+import UserProfile from '~/components/AppBar/Menus/UserProfile';
+import WorkSpace from '~/components/AppBar/Menus/WorkSpace';
+import ModeSelect from '~/components/ModeSelect/ModeSelect';
 
 function AppBar() {
 	const [searchValue, setSearchValue] = useState('')
@@ -19,24 +19,17 @@ function AppBar() {
 			bgcolor: theme => theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0'
 		}}>
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-				<Apps sx={{ color: 'white' }}/>
+				<Link href={'/'} sx={{ alignSelf: 'center', lineHeight: '1' }}>
+					<Apps sx={{ color: 'white' }}/>
+				</Link>
+
 				<Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
 					<SvgIcon component={Logo} inheritViewBox fontSize="small" sx={{ color: 'white' }}/>
 					<Typography variant="span" sx={{ fontSize: '1.2', color: 'white' }}>Trello</Typography>
 				</Box>
+
 				<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 					<WorkSpace/>
-
-					<Button
-						variant="outlined"
-						startIcon={<LibraryAdd/>}
-						sx={
-							{
-								color: 'white', border: 'none', '&:hover': {
-									border: 'none'
-								}
-							}}
-					>Create</Button>
 				</Box>
 			</Box>
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

@@ -36,15 +36,17 @@ export default function PositionedMenu() {
 				open={open}
 				onClose={handleClose}
 				anchorOrigin={{
-					vertical: 'top',
+					vertical: 'bottom',
 					horizontal: 'left'
 				}}
 				transformOrigin={{
-					vertical: 'top',
+					vertical: 'bottom',
 					horizontal: 'left'
 				}}
 		  >
-				<MenuItem></MenuItem>
+				<MenuItem onClick={handleClose}>Profile</MenuItem>
+				<MenuItem onClick={handleClose}>My account</MenuItem>
+				<MenuItem onClick={handleClose}>Logout</MenuItem>
 
 		  </Menu>
 	  </div>

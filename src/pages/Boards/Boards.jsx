@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { createBoardAPI, fetchBoardsAPI } from '~/apis'
+import LoadingSpinner from '~/components/LoadingSpinner/LoadingSpinner'
 // import { useAuth } from '~/auth/UseAuth'
 import FormNewBoard from '~/pages/Boards/FormNewBoard'
 import { logout } from '~/redux/authSlice'
@@ -18,6 +19,8 @@ function Boards() {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [boards, setBoards] = useState([])
+	const [loadingSpinner, setLoadingSpinner] = useState(false)
+  
 	// const { user } = useAuth()
 	const [openNewBoardForm, setOpenNewBoardForm] = useState(false)
 
@@ -31,16 +34,20 @@ function Boards() {
 			})
 	}
 	useEffect(() => {
+		setLoadingSpinner(true)
 		fetchBoardsAPI()
 			.then(data => setBoards(data.data))
 			.catch(() => {
 				setBoards([])
 			})
+			.finally(() => {
+				setLoadingSpinner(false)
+			})
 	}, [])
 	return (
 		<Container
 			disableGutters={true}
-			maxWidth={false}
+			// maxWidth={false}
 			sx={{
 				height: '100vh',
 				display: 'flex',
@@ -50,6 +57,7 @@ function Boards() {
 				gap: 2
 			}}>
 
+			{loadingSpinner && <LoadingSpinner/>}
 
 			<Typography variant="h4" component="div" gutterBottom>
 				Boards
