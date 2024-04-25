@@ -6,7 +6,8 @@
     "dev": "cross-env BUILD_MODE=dev && vite --host",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --fix --report-unused-disable-directives --max-warnings 0",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
@@ -35,7 +36,9 @@
     "universal-cookie": "^7.1.4"
   },
   "devDependencies": {
+    "@cypress/vite-dev-server": "^5.0.7",
     "@vitejs/plugin-react": "latest",
+    "cypress": "^13.8.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",

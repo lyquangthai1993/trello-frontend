@@ -17,10 +17,10 @@ root.render(
 	<Provider store={store}>
 		<AuthProvider>
 			<CssVarsProvider theme={theme}>
-	  <ConfirmProvider>
-		  {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-		  <CssBaseline/>
-		  <ToastContainer
+				<ConfirmProvider>
+					{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+					<CssBaseline/>
+					<ToastContainer
 						position="top-center"
 						autoClose={5000}
 						hideProgressBar={false}
@@ -30,11 +30,10 @@ root.render(
 						pauseOnFocusLoss
 						draggable
 						pauseOnHover
-		  />
-		  <App/>
-	  </ConfirmProvider>
+					/>
+					<App/>
+				</ConfirmProvider>
 			</CssVarsProvider>
 		</AuthProvider>
 	</Provider>
 )
-// build test 111
