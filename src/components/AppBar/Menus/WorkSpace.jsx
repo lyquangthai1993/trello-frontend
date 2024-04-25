@@ -3,10 +3,8 @@ import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import * as React from 'react'
-import { useNavigate } from 'react-router-dom'
 
 export default function PositionedMenu() {
-	const navigate = useNavigate()
 	const [anchorEl, setAnchorEl] = React.useState(null)
 	const open = Boolean(anchorEl)
 	const handleClick = (event) => {
@@ -38,15 +36,17 @@ export default function PositionedMenu() {
 				open={open}
 				onClose={handleClose}
 				anchorOrigin={{
-					vertical: 'top',
+					vertical: 'bottom',
 					horizontal: 'left'
 				}}
 				transformOrigin={{
-					vertical: 'top',
+					vertical: 'bottom',
 					horizontal: 'left'
 				}}
 		  >
-				<MenuItem></MenuItem>
+				<MenuItem onClick={handleClose}>Profile</MenuItem>
+				<MenuItem onClick={handleClose}>My account</MenuItem>
+				<MenuItem onClick={handleClose}>Logout</MenuItem>
 
 		  </Menu>
 	  </div>
