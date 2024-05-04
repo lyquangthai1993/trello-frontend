@@ -56,7 +56,9 @@ export const loginAPI = async (data) => {
 }
 
 export const getCurrentUserAPI = async () => {
-	const request = await axiosInstance.get('/v1/auth/me') // replace with your actual endpoint
+	const request = await axiosInstance.get('/v1/auth/me', {
+		skipInterceptor: true
+	})
 	return request.data
 }
 

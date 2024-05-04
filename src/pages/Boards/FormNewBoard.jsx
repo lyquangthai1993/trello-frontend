@@ -34,7 +34,7 @@ function FormNewBoard({ createBoard }) {
 		<Box
 			component="form"
 			sx={{
-				display: 'block',
+				display: 'flex',
 				gap: 2
 			}}
 			onSubmit={handleSubmit(onSubmit)}>
@@ -99,7 +99,7 @@ function FormNewBoard({ createBoard }) {
 				/>
 			</FormControl>
 
-			<Button type="submit">Submit</Button>
+			<Button type="submit" variant="outlined" color="secondary">Submit</Button>
 		</Box>
 	)
 }
