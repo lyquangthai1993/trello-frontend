@@ -10,8 +10,8 @@ const axiosInstance = axios.create({
 })
 // console.log('APIROOT = ', APIROOT)
 
-export const fetchBoardsAPI = async () => {
-	const request = await axiosInstance.get('/v1/boards')
+export const fetchBoardsAPI = async (params) => {
+	const request = await axiosInstance.get('/v1/boards', { params })
 	return request.data
 }
 export const fetchBoardDetailAPI = async (boardId) => {

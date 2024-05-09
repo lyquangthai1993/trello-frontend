@@ -1,5 +1,5 @@
 import { AddCard, Person, Public } from '@mui/icons-material'
-import { IconButton } from '@mui/material'
+import { IconButton, Pagination } from '@mui/material'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -20,6 +20,8 @@ function Boards() {
 	const navigate = useNavigate()
 	const [boards, setBoards] = useState([])
 	const [loadingSpinner, setLoadingSpinner] = useState(false)
+	const [page, setPage] = useState(1)
+	const [totalPages, setTotalPages] = useState(0)
 
 	// const { user } = useAuth()
 	const [openNewBoardForm, setOpenNewBoardForm] = useState(false)
@@ -33,17 +35,29 @@ function Boards() {
 				toggleNewBoardForm()
 			})
 	}
+
+	const handlePageChange = (event, value) => {
+		setPage(value)
+	}
+
 	useEffect(() => {
 		setLoadingSpinner(true)
-		fetchBoardsAPI()
-			.then(data => setBoards(data.data))
+		fetchBoardsAPI({
+			page: page - 1, // API might be 0-indexed
+			perPage: 4
+		})
+			.then(data => {
+				setBoards(data.data)
+				setTotalPages(data.totalPages)
+			})
 			.catch(() => {
 				setBoards([])
 			})
 			.finally(() => {
 				setLoadingSpinner(false)
 			})
-	}, [])
+	}, [page])
+
 	return (
 		<Container
 			disableGutters={true}
@@ -92,6 +106,8 @@ function Boards() {
 					</Grid>
 				))}
 			</Grid>
+
+			<Pagination count={totalPages} page={page} shape="rounded" onChange={handlePageChange}/>
 
 			<Button startIcon={<AddCard/>} onClick={toggleNewBoardForm}>Add new board</Button>
 
